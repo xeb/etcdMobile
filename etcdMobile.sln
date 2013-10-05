@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Switchboard.iPhone", "Switchboard.iPhone.csproj", "{637F9D13-D4A2-44A9-966E-B888AF6C1AF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "etcdMobile.iPhone", "etcdMobile.iPhone\etcdMobile.iPhone.csproj", "{637F9D13-D4A2-44A9-966E-B888AF6C1AF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "etcdMobile.Core", "..\etcd-mobile.Core\etcdMobile.Core.csproj", "{1AB1705B-C922-4624-8510-0879AE8FA5E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "etcdMobile.Core", "etcdMobile.Core\etcdMobile.Core.csproj", "{1AB1705B-C922-4624-8510-0879AE8FA5E1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "etcdMobile.Core.Tests", "etcdMobile.Core.Tests\etcdMobile.Core.Tests.csproj", "{B72BE835-9656-4CEA-8E62-B0D8CBE622E0}"
 EndProject
@@ -55,6 +55,6 @@ Global
 		{B72BE835-9656-4CEA-8E62-B0D8CBE622E0}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Switchboard.iPhone.csproj
+		StartupItem = etcdMobile.iPhone.csproj
 	EndGlobalSection
 EndGlobal

@@ -8,9 +8,9 @@
     <ProjectGuid>{637F9D13-D4A2-44A9-966E-B888AF6C1AF6}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Switchboard.iPhone</RootNamespace>
+    <RootNamespace>etcdMobile.iPhone</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>SwitchboardiPhone</AssemblyName>
+    <AssemblyName>etcdMobileiPhone</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -107,7 +107,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\etcd-mobile.Core\etcdMobile.Core.csproj">
+    <ProjectReference Include="..\etcdMobile.Core\etcdMobile.Core.csproj">
       <Project>{1AB1705B-C922-4624-8510-0879AE8FA5E1}</Project>
       <Name>etcdMobile.Core</Name>
     </ProjectReference>
