@@ -2,15 +2,16 @@ using System;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using System.Collections.Generic;
+using etcdMobile.Core;
 
 namespace Switchboard.iPhone.Common
 {
-	public class SimpleSource : UITableViewSource
+	public class EtcdElementSource : UITableViewSource
 	{
 		protected UINavigationController NavigationController;
-		protected List<SimpleCell> Cells;
+		protected List<EtcdElement> Cells;
 		
-		public SimpleSource(List<SimpleCell> cells, UINavigationController nav)
+		public EtcdElementSource(List<EtcdElement> cells, UINavigationController nav)
 		{
 			NavigationController = nav;
 			Cells = cells;
@@ -27,7 +28,7 @@ namespace Switchboard.iPhone.Common
     		CellSelected(cell);
         }
         
-        public virtual void CellSelected(SimpleCell cell)
+        public virtual void CellSelected(EtcdElement cell)
         {
         	Console.WriteLine("Selected Cell '{0}'", cell.Key);
         }
@@ -42,17 +43,17 @@ namespace Switchboard.iPhone.Common
         	return 1;
         }
         
-        public virtual void ModifyNewCell(UITableViewCell tableCell, SimpleCell simpleCell)
+        public virtual void ModifyNewCell(UITableViewCell tableCell, EtcdElement simpleCell)
         {
         }
         
-        public virtual void ModifyReusedCell(UITableViewCell tableCell, SimpleCell simpleCell)
+        public virtual void ModifyReusedCell(UITableViewCell tableCell, EtcdElement simpleCell)
         {
         }
        
         public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
         {
-            SimpleCell cell = Cells[indexPath.Row];
+            EtcdElement cell = Cells[indexPath.Row];
             
 			var tblCell = tableView.DequeueReusableCell("TblCell");
 			if (tblCell == null)
@@ -61,7 +62,7 @@ namespace Switchboard.iPhone.Common
         		ModifyNewCell(tblCell, cell);
         	}
             
-            tblCell.TextLabel.Text = cell.Key;
+            tblCell.TextLabel.Text = cell.KeyName;
             ModifyReusedCell(tblCell, cell);
             
             return tblCell;

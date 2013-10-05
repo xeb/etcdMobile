@@ -4,6 +4,7 @@ using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Switchboard.iPhone.Common;
+using etcdMobile.Core;
 using System.Drawing;
 
 namespace Switchboard.iPhone
@@ -12,10 +13,10 @@ namespace Switchboard.iPhone
 	{
 		private UILabel _title;
 		private UIBarButtonItem _add;
-		private SimpleCell _previousCell;
-		private List<SimpleCell> _cells;
+		private EtcdElement _previousCell;
+		private List<EtcdElement> _cells;
 		
-		public KeyList(List<SimpleCell> cells, SimpleCell previousCell)
+		public KeyList(List<EtcdElement> cells, EtcdElement previousCell)
 		{
 			_cells = cells;
 			_previousCell = previousCell;
@@ -23,6 +24,11 @@ namespace Switchboard.iPhone
 		
 		public KeyList()
 		{
+		}
+		
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
 		}
 		
 		public override void ViewDidAppear (bool animated)
@@ -51,7 +57,7 @@ namespace Switchboard.iPhone
 			
 			_title = new UILabel(new RectangleF(0, 25, View.Bounds.Width, 15));
 			_title.Text = "etcd Switchboard";
-			_title.Font = UIFont.BoldSystemFontOfSize(19f);
+			_title.Font = UIFont.FromName("Futura", 20f);
 			_title.TextAlignment = UITextAlignment.Center;
 			_title.TextColor = UIColor.White;
 			
@@ -59,11 +65,11 @@ namespace Switchboard.iPhone
 			
 			if(_cells == null)
 			{
-				_cells = new List<SimpleCell>();
-				_cells.Add(new SimpleCell { Key = "Test 1" });
-				_cells.Add(new SimpleCell { Key = "Test 2" });
-				_cells.Add(new SimpleCell { Key = "Test 3" });
-				_cells.Add(new SimpleCell { Key = "Test 4" });
+				_cells = new List<EtcdElement>();
+				_cells.Add(new EtcdElement { Key = "Test 1" });
+				_cells.Add(new EtcdElement { Key = "Test 2" });
+				_cells.Add(new EtcdElement { Key = "Test 3" });
+				_cells.Add(new EtcdElement { Key = "Test 4" });
 			}
 			
 			var keySource = new KeySource(_cells, NavigationController);
@@ -79,15 +85,15 @@ namespace Switchboard.iPhone
 			
 		}
 		
-		public class KeySource : SimpleSource
+		public class KeySource : EtcdElementSource
 		{
 			private UINavigationController _nav;
-			public KeySource(List<SimpleCell> cells, UINavigationController nav) : base(cells, nav)
+			public KeySource(List<EtcdElement> cells, UINavigationController nav) : base(cells, nav)
 			{
 				_nav = nav;
 			}
 			
-			public override void ModifyNewCell (UITableViewCell tableCell, SimpleCell cell)
+			public override void ModifyNewCell (UITableViewCell tableCell, EtcdElement cell)
 			{
 				tableCell.BackgroundColor = UIColor.FromRGBA(0,0,0,0);
 				tableCell.TextLabel.TextColor = UIColor.FromRGB(190,190,190);
@@ -104,16 +110,16 @@ namespace Switchboard.iPhone
 				}
 			}
 			
-			public override void CellSelected (SimpleCell cell)
+			public override void CellSelected (EtcdElement cell)
 			{
 				base.CellSelected (cell);
 				
-				var newCells = new List<SimpleCell>();
-				newCells.Add(new SimpleCell { Key = "Test A" });
-				newCells.Add(new SimpleCell { Key = "Test B", Value = "true" });
-				newCells.Add(new SimpleCell { Key = "Test C" });
-				newCells.Add(new SimpleCell { Key = "Test D", Value = "false" });
-				newCells.Add(new SimpleCell { Key = "Very Long Name" });
+				var newCells = new List<EtcdElement>();
+				newCells.Add(new EtcdElement { Key = "Test A" });
+				newCells.Add(new EtcdElement { Key = "Test B", Value = "true" });
+				newCells.Add(new EtcdElement { Key = "Test C" });
+				newCells.Add(new EtcdElement { Key = "Test D", Value = "false" });
+				newCells.Add(new EtcdElement { Key = "Very Long Name" });
 				
 				var keylist = new KeyList(newCells, cell);
 				_nav.PushViewController(keylist, true);

@@ -83,6 +83,8 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+    <Reference Include="Mono.Data.Sqlite" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -96,8 +98,12 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="KeyList.cs" />
-    <Compile Include="Common\SimpleCell.cs" />
-    <Compile Include="Common\SimpleSource.cs" />
+    <Compile Include="Common\EtcdElementSource.cs" />
+    <Compile Include="Common\BackgroundViewController.cs" />
+    <Compile Include="ServerList.cs" />
+    <Compile Include="Common\ServerSource.cs" />
+    <Compile Include="Common\Server.cs" />
+    <Compile Include="Common\SqlCache.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -105,5 +111,8 @@
       <Project>{1AB1705B-C922-4624-8510-0879AE8FA5E1}</Project>
       <Name>etcdMobile.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Images\background.png" />
   </ItemGroup>
 </Project>

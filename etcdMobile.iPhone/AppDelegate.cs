@@ -14,16 +14,16 @@ namespace Switchboard.iPhone
 	{
 		private UIWindow _window;
 		private UINavigationController _nav;
-		private KeyList _keyList;
+		private UIViewController _root;
 		
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
 			// create a new window instance based on the screen size
 			_window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
-			_keyList = new KeyList();
+			_root = new ServerList();
 			_nav = new UINavigationController();
-			_nav.PushViewController(_keyList, true);
+			_nav.PushViewController(_root, true);
 			
 			_window.RootViewController = _nav;
 			

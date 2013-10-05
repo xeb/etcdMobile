@@ -20,7 +20,6 @@ namespace etcdMobile.Core
 			}
 			
 			_baseUrl = baseUrl;
-			
 		}
 		
 		public List<EtcdElement> GetKeys(string parent = "")
