@@ -100,7 +100,6 @@
     <Compile Include="KeyList.cs" />
     <Compile Include="Common\EtcdElementSource.cs" />
     <Compile Include="Common\BackgroundViewController.cs" />
-    <Compile Include="ServerList.cs" />
     <Compile Include="Common\ServerSource.cs" />
     <Compile Include="Common\Server.cs" />
     <Compile Include="Common\SqlCache.cs" />
