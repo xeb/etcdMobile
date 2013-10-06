@@ -6,7 +6,6 @@ using MonoTouch.UIKit;
 using Switchboard.iPhone.Common;
 using etcdMobile.Core;
 using System.Drawing;
-using Switchboard.iPhone.Common;
 
 
 namespace Switchboard.iPhone
@@ -29,9 +28,11 @@ namespace Switchboard.iPhone
 		{
 			base.ViewDidLoad ();
 			
-			_title = new UILabel(new RectangleF(0, 25, View.Bounds.Width, 25));
-			_title.Text = "etcd Switchboard";
-			_title.Font = UIFont.FromName("Futura", 20f);
+			View.TintColor = UIColor.White;
+			
+			_title = new UILabel(new RectangleF(0, 30, View.Bounds.Width, 30));
+			_title.Text = "etcd Mobile Admin";
+			_title.Font = UIFont.FromName("Futura", 19f);
 			_title.TextAlignment = UITextAlignment.Center;
 			_title.TextColor = UIColor.White;
 			
@@ -43,7 +44,7 @@ namespace Switchboard.iPhone
 			_tbl = new UITableView();
 			_tbl.Source = _serverSource;
 			_tbl.ReloadData();
-			_tbl.Frame = new RectangleF(0, 64, View.Bounds.Width, View.Bounds.Height - 50);
+			_tbl.Frame = new RectangleF(0, 64, View.Bounds.Width, View.Bounds.Height - 70);
 			_tbl.BackgroundColor = UIColor.FromRGBA(0,0,0,0);
 			_tbl.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 			
@@ -52,13 +53,24 @@ namespace Switchboard.iPhone
 			// If no servers, display label
 			
 			_toolbar = new UIToolbar();
-			var btn = new UIButton(UIButtonType.ContactAdd);
-			btn.TouchUpInside += (sender, e) => 
+			var btn = new UIBarButtonItem(UIBarButtonSystemItem.Add);
+			btn.TintColor = UIColor.White;
+			btn.Clicked += (sender, e) => 
 			{
 				var alert = new UIAlertView("", "Add button pressed", null, "OK");
 				alert.Show();
 			};
-			_toolbar.Add(btn);
+//			
+			_toolbar.Items = new UIBarButtonItem[] 
+			{ 
+				new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
+				btn,
+			};
+			
+			_toolbar.Frame = new RectangleF(0, View.Bounds.Height - 40, View.Bounds.Width, 40);
+			_toolbar.BackgroundColor = UIColor.FromRGBA(0,0,0,0);
+			_toolbar.BarStyle = UIBarStyle.Black;
+			_toolbar.Translucent = true;
 			
 			View.AddSubview(_toolbar);
 		}
