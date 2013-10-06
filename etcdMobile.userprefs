@@ -3,15 +3,16 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="etcdMobile.iPhone/ServerList.cs">
     <Files>
       <File FileName="etcdMobile.Core.Tests/EtcdClientTest.cs" Line="14" Column="11" />
-      <File FileName="etcdMobile.iPhone/ServerList.cs" Line="29" Column="24" />
-      <File FileName="etcdMobile.iPhone/AppDelegate.cs" Line="20" Column="4" />
+      <File FileName="etcdMobile.iPhone/AppDelegate.cs" Line="1" Column="1" />
       <File FileName="etcdMobile.iPhone/Main.cs" Line="1" Column="1" />
+      <File FileName="etcdMobile.iPhone/ServerList.cs" Line="23" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="etcdMobile.iPhone" expanded="True">
-            <Node name="ServerList.cs" selected="True" />
+          <Node name="etcdMobile.Core.Tests" expanded="True" />
+          <Node name="etcdMobile.iPhone" expanded="True" selected="True">
+            <Node name="Images" expanded="True" />
           </Node>
         </State>
       </Pad>

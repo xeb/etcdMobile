@@ -103,6 +103,10 @@
     <Compile Include="Common\ServerSource.cs" />
     <Compile Include="Common\Server.cs" />
     <Compile Include="Common\SqlCache.cs" />
+    <Compile Include="ServerList.cs" />
+    <Compile Include="ServerList.designer.cs">
+      <DependentUpon>ServerList.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -113,5 +117,11 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Images\background.png" />
+    <BundleResource Include="Resources\Default-568h%402x.png" />
+    <BundleResource Include="Resources\Default%402x.png" />
+    <BundleResource Include="Resources\Default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="ServerList.xib" />
   </ItemGroup>
 </Project>
