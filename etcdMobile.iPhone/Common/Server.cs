@@ -1,6 +1,6 @@
 using System;
 
-namespace Switchboard.iPhone.Common
+namespace etcdMobile.iPhone.Common
 {
 	public class Server
 	{

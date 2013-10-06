@@ -1,18 +1,20 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone.7.0" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="etcdMobile.iPhone/ServerList.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="etcdMobile.iPhone/AppDelegate.cs">
     <Files>
       <File FileName="etcdMobile.Core.Tests/EtcdClientTest.cs" Line="14" Column="11" />
-      <File FileName="etcdMobile.iPhone/AppDelegate.cs" Line="1" Column="1" />
+      <File FileName="etcdMobile.iPhone/AppDelegate.cs" Line="14" Column="3" />
       <File FileName="etcdMobile.iPhone/Main.cs" Line="1" Column="1" />
-      <File FileName="etcdMobile.iPhone/ServerList.cs" Line="23" Column="4" />
+      <File FileName="etcdMobile.iPhone/ServerList.cs" Line="21" Column="1" />
+      <File FileName="etcdMobile.iPhone/Common/BackgroundViewController.cs" Line="16" Column="63" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="etcdMobile.Core.Tests" expanded="True" />
           <Node name="etcdMobile.iPhone" expanded="True" selected="True">
-            <Node name="Images" expanded="True" />
+            <Node name="Common" expanded="True" />
+            <Node name="Resources" expanded="True" />
           </Node>
         </State>
       </Pad>

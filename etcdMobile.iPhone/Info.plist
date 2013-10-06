@@ -16,5 +16,14 @@
 	<array>
 		<dict/>
 	</array>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>Icon@2x</string>
+		<string>Icon</string>
+		<string>Icon-Small@2x</string>
+		<string>Icon-Small</string>
+	</array>
+	<key>CFBundleDisplayName</key>
+	<string>etcd</string>
 </dict>
 </plist>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using Switchboard.iPhone.Common;
+using etcdMobile.iPhone.Common;
 using etcdMobile.Core;
 using System.Drawing;
 

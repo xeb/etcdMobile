@@ -4,7 +4,7 @@ using System.Linq;
 using System.Drawing;
 using MonoTouch.UIKit;
 
-namespace Switchboard.iPhone.Common
+namespace etcdMobile.iPhone.Common
 {
 	public class BackgroundViewController : UIViewController
 	{		
@@ -13,7 +13,7 @@ namespace Switchboard.iPhone.Common
 			base.ViewDidLoad ();
 			
 			View.BackgroundColor = UIColor.Black;
-			var background = UIImage.FromBundle("Images/background.png");
+			var background = UIImage.FromResource(GetType().Assembly, "background.png");
 			var backgroundView = new UIImageView(background);
 			backgroundView.Frame = this.View.Bounds;
 			this.View.AddSubview(backgroundView);

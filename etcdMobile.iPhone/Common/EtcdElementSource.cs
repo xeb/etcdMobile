@@ -4,7 +4,7 @@ using MonoTouch.UIKit;
 using System.Collections.Generic;
 using etcdMobile.Core;
 
-namespace Switchboard.iPhone.Common
+namespace etcdMobile.iPhone.Common
 {
 	public class EtcdElementSource : UITableViewSource
 	{

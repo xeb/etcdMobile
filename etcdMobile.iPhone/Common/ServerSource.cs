@@ -2,27 +2,24 @@ using System;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using System.Collections.Generic;
-using etcdMobile.Core;
 
-namespace Switchboard.iPhone.Common
+namespace etcdMobile.iPhone.Common
 {
 	public class ServerSource : UITableViewSource
 	{
 		protected UINavigationController NavigationController;
-		protected SqlCache SqlCache;
 		private List<Server> _servers;
 		
-		public ServerSource(SqlCache sql, UINavigationController nav)
+		public ServerSource(List<Server> servers, UINavigationController nav)
 		{
 			NavigationController = nav;
-			SqlCache = sql;
 			
-			Refresh();
+			Refresh(servers);
 		}
 		
-		public virtual void Refresh()
+		public virtual void Refresh(List<Server> servers)
 		{
-			_servers = SqlCache.GetServers();
+			_servers = servers;
 		}
 		
         public override int RowsInSection (UITableView tableview, int section)
@@ -50,6 +47,7 @@ namespace Switchboard.iPhone.Common
         		tblCell = new UITableViewCell(UITableViewCellStyle.Default, "TblCell");
         	}
             
+            tblCell.BackgroundColor = UIColor.FromRGBA(0,0,0,0);
             tblCell.TextLabel.Text = cell.Name;
             
             return tblCell;

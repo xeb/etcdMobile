@@ -8,7 +8,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Mono.Data.Sqlite;
 
-namespace Switchboard.iPhone.Common
+namespace etcdMobile.iPhone.Common
 {
 	public class SqlCache
 	{	
