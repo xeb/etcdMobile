@@ -90,6 +90,7 @@
     <Folder Include="Resources\" />
     <Folder Include="Common\" />
     <Folder Include="Images\" />
+    <Folder Include="Server\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -100,16 +101,16 @@
     <Compile Include="KeyList.cs" />
     <Compile Include="Common\EtcdElementSource.cs" />
     <Compile Include="Common\BackgroundViewController.cs" />
-    <Compile Include="Common\ServerSource.cs" />
-    <Compile Include="Common\Server.cs" />
     <Compile Include="Common\SqlCache.cs" />
-    <Compile Include="ServerList.cs" />
-    <Compile Include="ServerList.designer.cs">
-      <DependentUpon>ServerList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ServerAdd.cs" />
-    <Compile Include="ServerAdd.designer.cs">
+    <Compile Include="Server\ServerAdd.cs" />
+    <Compile Include="Server\ServerAdd.designer.cs">
       <DependentUpon>ServerAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Server\Server.cs" />
+    <Compile Include="Server\ServerSource.cs" />
+    <Compile Include="Server\ServerList.cs" />
+    <Compile Include="Server\ServerList.designer.cs">
+      <DependentUpon>ServerList.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -132,7 +133,7 @@
     <BundleResource Include="Images\xmark.png" />
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="ServerList.xib" />
-    <InterfaceDefinition Include="ServerAdd.xib" />
+    <InterfaceDefinition Include="Server\ServerAdd.xib" />
+    <InterfaceDefinition Include="Server\ServerList.xib" />
   </ItemGroup>
 </Project>

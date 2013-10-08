@@ -31,9 +31,9 @@ namespace etcdMobile.iPhone
 
 		public override void ViewDidLoad ()
 		{
-			base.ViewDidLoad ();
-			
 			Title = "Add New Server";
+			
+			base.ViewDidLoad ();
 			
 			_sqlCache = new SqlCache();
 			
@@ -44,10 +44,11 @@ namespace etcdMobile.iPhone
 			btnSave.Clicked += (sender, e) => 
 			{
 				var server = new Server { Name = txtName.Text, BaseUrl = txtAddress.Text };
-				InvokeInBackground(() =>
+//				InvokeInBackground(() =>
 				{
 					_sqlCache.SaveServer(server);
-				});
+				}
+//				);
 			
 				NavigationController.PopToRootViewController(true);
 			};

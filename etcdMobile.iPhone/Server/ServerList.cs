@@ -11,6 +11,7 @@ namespace etcdMobile.iPhone
 	public partial class ServerList : UIViewController
 	{
 		private ServerSource _source;
+		private SqlCache _sqlCache;
 		private ServerAdd _serverAddView;
 		
 		public ServerList () : base ("ServerList", null)
@@ -19,31 +20,42 @@ namespace etcdMobile.iPhone
 
 		public override void DidReceiveMemoryWarning ()
 		{
-			// Releases the view if it doesn't have a superview.
 			base.DidReceiveMemoryWarning ();
-			
-			// Release any cached data, images, etc that aren't in use.
 		}
 		
 		public override void ViewDidAppear (bool animated)
 		{
+			Refresh();
 			base.ViewDidAppear (animated);
 			NavigationController.NavigationBarHidden = true;
+		}
+		
+		private void Refresh()
+		{
+			_source.Refresh();
 		}
 
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
+			
+			_sqlCache = new SqlCache();
+			
 			tbl.BackgroundColor = UIColor.Clear;
 			tbl.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 			
-			var servers = new List<Server>();
-//			servers.Add(new Server { Name = "Test" });
+			_source = new ServerSource(_sqlCache, NavigationController, tbl);
 			
-			_source = new ServerSource(servers, NavigationController);
-			tbl.Source = _source;
+			var refresh = new UIRefreshControl();
+			refresh.ValueChanged += (sender, e) => 
+			{
+				Refresh();
+				refresh.EndRefreshing();
+			};
 			
-			if(servers.Count == 0)
+			tbl.Add(refresh);
+			
+			if(_source.Count == 0)
 			{
 				tbl.Hidden = true;
 				lbl.Text = "No Servers Added";

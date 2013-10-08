@@ -54,18 +54,41 @@ namespace etcdMobile.iPhone.Common
 			{
 				using(var cmd = conn.CreateCommand())
 				{
-					cmd.CommandText = @"INSERT OR IGNORE INTO Server (Id, Name, BaseUrl) 
-										VALUES (@Id, @Name, @BaseUrl)
-										;
-										UPDATE Server SET Name = @Name, BaseUrl = @BaseUrl
-										WHERE Id = @Id
-										;
-										";
-					cmd.Parameters.AddWithValue("@Id", server.Id);
+					if(server.Id == 0)
+					{
+						cmd.CommandText = @"INSERT INTO Server (Name, BaseUrl) VALUES (@Name, @BaseUrl);";
+					}
+					else
+					{
+						cmd.CommandText = @"UPDATE Server SET Name = @Name, BaseUrl = @BaseUrl WHERE Id = @Id;";
+						cmd.Parameters.AddWithValue("@Id", server.Id);
+					}
+				
 					cmd.Parameters.AddWithValue("@Name", server.Name);
 					cmd.Parameters.AddWithValue("@BaseUrl", server.BaseUrl);
 					cmd.ExecuteNonQuery();
 				}
+			}
+			
+			conn.Close();
+		}
+	    
+		public void DeleteServer(Server server)
+		{
+			if(server.Id == 0)
+			{
+				var alert = new UIAlertView("", "Server ID is 0; deleting anyways", null, "OK");
+				alert.Show();
+			}
+			
+			var conn = GetConnection();
+			conn.Open();
+		
+			using(var cmd = conn.CreateCommand())
+			{
+				cmd.CommandText = @"DELETE FROM Server WHERE Id = @Id;";
+				cmd.Parameters.AddWithValue("@Id", server.Id);
+				cmd.ExecuteNonQuery();
 			}
 			
 			conn.Close();
