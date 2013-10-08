@@ -14,12 +14,30 @@ namespace etcdMobile.Core
 		private string _baseUrl;
 		public EtcdClient (string baseUrl)
 		{
+			_baseUrl = ModifyBaseUrl(baseUrl);
+		}
+		
+		private static string ModifyBaseUrl(string baseUrl)
+		{
 			if(!string.IsNullOrWhiteSpace(baseUrl) && !baseUrl.EndsWith("/"))
 			{
 				baseUrl += "/";
 			}
 			
-			_baseUrl = baseUrl;
+			return baseUrl;
+		}
+		
+		public bool IsValidEndpoint()
+		{
+			try
+			{
+				var keys = GetKeys();
+				return true;
+			}
+			catch(Exception ex)
+			{
+				return false;
+			}
 		}
 		
 		public List<EtcdElement> GetKeys(string parent = "")

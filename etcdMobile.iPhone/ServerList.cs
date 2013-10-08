@@ -11,6 +11,8 @@ namespace etcdMobile.iPhone
 	public partial class ServerList : UIViewController
 	{
 		private ServerSource _source;
+		private ServerAdd _serverAddView;
+		
 		public ServerList () : base ("ServerList", null)
 		{
 		}
@@ -32,11 +34,11 @@ namespace etcdMobile.iPhone
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			tbl.BackgroundColor = UIColor.FromRGBA(0,0,0,0);
+			tbl.BackgroundColor = UIColor.Clear;
 			tbl.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 			
 			var servers = new List<Server>();
-			servers.Add(new Server { Name = "Test" });
+//			servers.Add(new Server { Name = "Test" });
 			
 			_source = new ServerSource(servers, NavigationController);
 			tbl.Source = _source;
@@ -46,9 +48,16 @@ namespace etcdMobile.iPhone
 				tbl.Hidden = true;
 				lbl.Text = "No Servers Added";
 				lbl.Font = UIFont.BoldSystemFontOfSize(16f);
-				lbl.Frame = new RectangleF(0, View.Bounds.Height / 2, View.Bounds.Width, 30);
+				lbl.Frame = new RectangleF(0, View.Bounds.Height / 2 - 50, View.Bounds.Width, 30);
 			}
 			
+			btnAdd.Clicked += (sender, e) => 
+			{
+				if(_serverAddView == null)
+					_serverAddView = new ServerAdd();
+					
+				NavigationController.PushViewController(_serverAddView, true);
+			};
 		}
 	}
 }

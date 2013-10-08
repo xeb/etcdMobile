@@ -16,7 +16,7 @@ namespace etcdMobile.iPhone.Common
 		
 		public List<Server> GetServers()
 		{
-			var projects = new List<Server>();
+			var servers = new List<Server>();
 			var conn = GetConnection();
 			
 			using(var cmd = conn.CreateCommand())
@@ -31,16 +31,21 @@ namespace etcdMobile.iPhone.Common
 						p.Id = Convert.ToInt32(reader["ID"]);
 						p.Name = Convert.ToString(reader["Name"]);
 						p.BaseUrl = Convert.ToString(reader["BaseUrl"]);
-						projects.Add(p);
+						servers.Add(p);
 					}
 				}
 				conn.Close();
 			}
 			
-			return projects;
+			return servers;
 		}
 		
-		public void SaveProjects(List<Server> servers)
+		public void SaveServer(Server server)
+		{
+			SaveServers(new[] { server });
+		}
+		
+		public void SaveServers(IEnumerable<Server> servers)
 		{
 			var conn = GetConnection();
 			conn.Open();
@@ -52,7 +57,7 @@ namespace etcdMobile.iPhone.Common
 					cmd.CommandText = @"INSERT OR IGNORE INTO Server (Id, Name, BaseUrl) 
 										VALUES (@Id, @Name, @BaseUrl)
 										;
-										UPDATE Project SET Name = @Name, BaseUrl = @BaseUrl
+										UPDATE Server SET Name = @Name, BaseUrl = @BaseUrl
 										WHERE Id = @Id
 										;
 										";
