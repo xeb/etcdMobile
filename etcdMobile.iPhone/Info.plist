@@ -24,6 +24,8 @@
 		<string>Icon-Small</string>
 	</array>
 	<key>CFBundleDisplayName</key>
-	<string>etcd</string>
+	<string>etcd Mobile Admin</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.epicapp.etcdmobile</string>
 </dict>
 </plist>
