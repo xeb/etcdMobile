@@ -32,16 +32,8 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Net" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="mscorlib">
-      <HintPath>..\..\..\..\..\..\..\Library\Frameworks\Mono.framework\Versions\3.2.3\lib\mono\4.0\mscorlib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

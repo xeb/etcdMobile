@@ -8,18 +8,18 @@ namespace etcdMobile.iPhone.Common
 {
 	public class ServerSource : UITableViewSource
 	{
-		private UINavigationController _nav;
 		private UITableView _tbl;
 		private List<Server> _servers;
 		private SqlCache _sqlCache;
+		public EventHandler ItemDeleted;
 		
-		public ServerSource(SqlCache sqlCache, UINavigationController nav, UITableView tbl)
+		public ServerSource(SqlCache sqlCache, UITableView tbl)
 		{
-			_nav = nav;
 			_tbl = tbl;
 			_sqlCache = sqlCache;
 			
 			_tbl.Source = this;
+
 			Refresh();
 		}
 		
@@ -36,13 +36,16 @@ namespace etcdMobile.iPhone.Common
 		
 		public override void CommitEditingStyle (UITableView tableView, UITableViewCellEditingStyle editingStyle, NSIndexPath indexPath)
 		{
-			if (editingStyle == UITableViewCellEditingStyle.Delete) {
+			if (editingStyle == UITableViewCellEditingStyle.Delete) 
+			{
 				var server = _servers[indexPath.Row];
-//				tableView.CellAt(indexPath).Dispose();
 				_sqlCache.DeleteServer(server);
 				Refresh();
-				
-				
+
+				if (ItemDeleted != null)
+				{
+					ItemDeleted (this, null);
+				}
 			}
 		}
 		
@@ -63,7 +66,7 @@ namespace etcdMobile.iPhone.Common
 //				cell.BackgroundColor = UIColor.Green;
 			}
 		}
-		
+
 		
 		public int Count
 		{
@@ -84,31 +87,37 @@ namespace etcdMobile.iPhone.Common
         {
         	return 1;
         }
+
+		private readonly string _cellName = "ServerCell";
         
         public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
         {
             Server cell = _servers[indexPath.Row];
             
-			var tblCell = tableView.DequeueReusableCell("TblCell");
+			var tblCell = tableView.DequeueReusableCell(_cellName) as ServerListCell;
 			if (tblCell == null)
         	{
-        		tblCell = new UITableViewCell(UITableViewCellStyle.Default, "TblCell");
+//				tblCell = new ServerListCell(UITableViewCellStyle.Default, _cellName);
+				tblCell = ServerListCell.Create ();
         	}
             
-            tblCell.BackgroundColor = UIColor.Clear;
-            tblCell.TextLabel.Text = cell.Name;
-            tblCell.TextLabel.Font = UIFont.BoldSystemFontOfSize(14f);
-            
-            tblCell.Frame = new RectangleF(tblCell.Frame.X, tblCell.Frame.Y, tblCell.Frame.Width, tblCell.Frame.Height * 2);
-            
-            var f = tblCell.TextLabel.Frame;
-            tblCell.TextLabel.Frame = new RectangleF(f.X , f.Y - 20, f.Width, f.Height);
-            
-            var lblUrl = new UILabel();
-            lblUrl.Font = UIFont.SystemFontOfSize(12);
-            lblUrl.Text = cell.BaseUrl;
-            lblUrl.Frame = new RectangleF(f.X, f.Y + 15, f.Width, f.Height);
-           	tblCell.Add(lblUrl);
+			tblCell.Name = cell.Name;
+			tblCell.Url = cell.BaseUrl;
+
+//            tblCell.BackgroundColor = UIColor.Clear;
+//            tblCell.TextLabel.Text = cell.Name;
+//            tblCell.TextLabel.Font = UIFont.BoldSystemFontOfSize(14f);
+//            
+//            tblCell.Frame = new RectangleF(tblCell.Frame.X, tblCell.Frame.Y, tblCell.Frame.Width, tblCell.Frame.Height * 2);
+//            
+//            var f = tblCell.TextLabel.Frame;
+//            tblCell.TextLabel.Frame = new RectangleF(f.X , f.Y - 20, f.Width, f.Height);
+//            
+//            var lblUrl = new UILabel();
+//            lblUrl.Font = UIFont.SystemFontOfSize(12);
+//            lblUrl.Text = cell.BaseUrl;
+//            lblUrl.Frame = new RectangleF(f.X, f.Y + 15, f.Width, f.Height);
+//           	tblCell.Add(lblUrl);
             
             return tblCell;
         }

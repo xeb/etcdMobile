@@ -23,29 +23,47 @@ namespace etcdMobile.iPhone
 			base.DidReceiveMemoryWarning ();
 		}
 		
-		public override void ViewDidAppear (bool animated)
+		public override void ViewWillAppear (bool animated)
 		{
-			Refresh();
-			base.ViewDidAppear (animated);
+			Refresh ();
+
+			base.ViewWillAppear (animated);
 			NavigationController.NavigationBarHidden = true;
 		}
 		
-		private void Refresh()
+		public void Refresh()
 		{
-			_source.Refresh();
-		}
+			_source.Refresh ();
 
+			if(_source.Count == 0)
+			{
+				tbl.Hidden = true;
+				lbl.Hidden = false;
+			}
+			else
+			{
+				tbl.Hidden = false;
+				lbl.Hidden = true;
+			}
+		}
+		
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 			
+			lbl.Text = "No Servers Added";
+			lbl.Font = UIFont.BoldSystemFontOfSize(16f);
+			lbl.Frame = new RectangleF(0, View.Bounds.Height / 2 - 50, View.Bounds.Width, 30);
+			lbl.Hidden = true;
+
 			_sqlCache = new SqlCache();
 			
 			tbl.BackgroundColor = UIColor.Clear;
 			tbl.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 			
-			_source = new ServerSource(_sqlCache, NavigationController, tbl);
-			
+			_source = new ServerSource(_sqlCache, tbl);
+			_source.ItemDeleted += (sender, e) => { Refresh(); };
+
 			var refresh = new UIRefreshControl();
 			refresh.ValueChanged += (sender, e) => 
 			{
@@ -54,15 +72,7 @@ namespace etcdMobile.iPhone
 			};
 			
 			tbl.Add(refresh);
-			
-			if(_source.Count == 0)
-			{
-				tbl.Hidden = true;
-				lbl.Text = "No Servers Added";
-				lbl.Font = UIFont.BoldSystemFontOfSize(16f);
-				lbl.Frame = new RectangleF(0, View.Bounds.Height / 2 - 50, View.Bounds.Width, 30);
-			}
-			
+
 			btnAdd.Clicked += (sender, e) => 
 			{
 				if(_serverAddView == null)

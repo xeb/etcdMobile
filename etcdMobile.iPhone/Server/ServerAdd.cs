@@ -15,12 +15,18 @@ namespace etcdMobile.iPhone
 		{
 		}
 
-		public override void ViewDidAppear (bool animated)
+		public override void ViewWillAppear (bool animated)
 		{
-			base.ViewDidAppear (animated);
+			txtAddress.Text = string.Empty;
+			txtName.Text = string.Empty;
+
+			imgResponse.Hidden = true;
+			lblResponse.Hidden = true;
 			NavigationController.NavigationBarHidden = false;
+
+			base.ViewWillAppear (animated);
 		}
-		
+
 		public override void DidReceiveMemoryWarning ()
 		{
 			// Releases the view if it doesn't have a superview.
@@ -36,19 +42,21 @@ namespace etcdMobile.iPhone
 			base.ViewDidLoad ();
 			
 			_sqlCache = new SqlCache();
-			
+
 			txtAddress.ResignFirstResponder();
 			txtAddress.ShouldReturn = DoReturn;
+
+			txtName.ResignFirstResponder ();
+			txtName.ShouldReturn = DoReturn;
+
 			btnSave.Enabled = false;
 			
 			btnSave.Clicked += (sender, e) => 
 			{
 				var server = new Server { Name = txtName.Text, BaseUrl = txtAddress.Text };
-//				InvokeInBackground(() =>
 				{
 					_sqlCache.SaveServer(server);
 				}
-//				);
 			
 				NavigationController.PopToRootViewController(true);
 			};
@@ -62,7 +70,6 @@ namespace etcdMobile.iPhone
 		
 		partial void txtAddressEditingDidEnd (MonoTouch.Foundation.NSObject sender)
 		{
-			Console.WriteLine("Editing Did End");
 			txtAddress.EndEditing(true);
 			
 			imgResponse.Hidden = true;

@@ -24,7 +24,8 @@ namespace etcdMobile.iPhone.Common
 				conn.Open();
 				cmd.CommandText = "SELECT * FROM Server";
 				
-				using (var reader = cmd.ExecuteReader ()) {
+				using (var reader = cmd.ExecuteReader ()) 
+				{
 					// loop through each record and add the name to our collection
 					while (reader.Read ()) { 
 						var p = new Server();
@@ -75,11 +76,11 @@ namespace etcdMobile.iPhone.Common
 	    
 		public void DeleteServer(Server server)
 		{
-			if(server.Id == 0)
-			{
-				var alert = new UIAlertView("", "Server ID is 0; deleting anyways", null, "OK");
-				alert.Show();
-			}
+//			if(server.Id == 0)
+//			{
+//				var alert = new UIAlertView("", "Server ID is 0; deleting anyways", null, "OK");
+//				alert.Show();
+//			}
 			
 			var conn = GetConnection();
 			conn.Open();

@@ -31,10 +31,10 @@ namespace etcdMobile.Core
 		{
 			try
 			{
-				var keys = GetKeys();
+				GetKeys();
 				return true;
 			}
-			catch(Exception ex)
+			catch
 			{
 				return false;
 			}

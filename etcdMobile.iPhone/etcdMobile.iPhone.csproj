@@ -25,6 +25,7 @@
     <MtouchDebug>true</MtouchDebug>
     <MtouchI18n />
     <MtouchArch>ARMv7</MtouchArch>
+    <MtouchSdkVersion>7.0</MtouchSdkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -112,6 +113,10 @@
     <Compile Include="Server\ServerList.designer.cs">
       <DependentUpon>ServerList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Server\ServerListCell.cs" />
+    <Compile Include="Server\ServerListCell.designer.cs">
+      <DependentUpon>ServerListCell.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -135,5 +140,6 @@
   <ItemGroup>
     <InterfaceDefinition Include="Server\ServerAdd.xib" />
     <InterfaceDefinition Include="Server\ServerList.xib" />
+    <InterfaceDefinition Include="Server\ServerListCell.xib" />
   </ItemGroup>
 </Project>
