@@ -2,6 +2,8 @@ using System;
 using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using etcdMobile.iPhone;
+using etcdMobile.iPhone.Common;
 
 namespace etcdMobile.iPhone
 {
@@ -14,9 +16,16 @@ namespace etcdMobile.iPhone
 		{
 		}
 
-		public static ServerListCell Create ()
+		public static ServerListCell Create (UINavigationController nav, Server server)
 		{
-			return (ServerListCell)Nib.Instantiate (null, null) [0];
+			var cell = (ServerListCell)Nib.Instantiate (null, null) [0];
+			cell.btnEdit.TouchUpInside += (sender, e) => 
+			{
+				var edit = new ServerAdd(server);
+				nav.PushViewController(edit, true);
+			};
+
+			return cell;
 		}
 
 		public ServerListCell(UITableViewCellStyle style, string reuseIdentifier) : base(style, reuseIdentifier)

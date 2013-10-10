@@ -11,14 +11,29 @@ namespace etcdMobile.iPhone
 	public partial class ServerAdd : UIViewController
 	{
 		private SqlCache _sqlCache;
-		public ServerAdd () : base ("ServerAdd", null)
+		private Server _serverForEdit;
+
+		public ServerAdd (Server server) : base ("ServerAdd", null)
+		{
+			_serverForEdit = server;
+		}
+
+		public ServerAdd() : this(null) 
 		{
 		}
 
 		public override void ViewWillAppear (bool animated)
 		{
-			txtAddress.Text = string.Empty;
-			txtName.Text = string.Empty;
+			if (_serverForEdit == null)
+			{
+				txtAddress.Text = string.Empty;
+				txtName.Text = string.Empty;
+			}
+			else
+			{
+				txtName.Text = _serverForEdit.Name;
+				txtAddress.Text = _serverForEdit.BaseUrl;
+			}
 
 			imgResponse.Hidden = true;
 			lblResponse.Hidden = true;
@@ -54,11 +69,16 @@ namespace etcdMobile.iPhone
 			btnSave.Clicked += (sender, e) => 
 			{
 				var server = new Server { Name = txtName.Text, BaseUrl = txtAddress.Text };
-				{
-					_sqlCache.SaveServer(server);
-				}
-			
+				server.Id = _serverForEdit != null ? _serverForEdit.Id : 0;
+
+				_sqlCache.SaveServer(server);
+
 				NavigationController.PopToRootViewController(true);
+			};
+
+			btnVerify.Clicked += (sender, e) => 
+			{
+				txtAddressEditingDidEnd(null);
 			};
 		}
 

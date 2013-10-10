@@ -61,7 +61,7 @@ namespace etcdMobile.iPhone
 			tbl.BackgroundColor = UIColor.Clear;
 			tbl.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 			
-			_source = new ServerSource(_sqlCache, tbl);
+			_source = new ServerSource(NavigationController, _sqlCache, tbl);
 			_source.ItemDeleted += (sender, e) => { Refresh(); };
 
 			var refresh = new UIRefreshControl();

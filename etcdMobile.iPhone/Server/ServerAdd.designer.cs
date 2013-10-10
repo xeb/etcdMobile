@@ -19,6 +19,9 @@ namespace etcdMobile.iPhone
 		MonoTouch.UIKit.UIBarButtonItem btnSave { get; set; }
 
 		[Outlet]
+		MonoTouch.UIKit.UIBarButtonItem btnVerify { get; set; }
+
+		[Outlet]
 		MonoTouch.UIKit.UIImageView imgResponse { get; set; }
 
 		[Outlet]
@@ -35,9 +38,9 @@ namespace etcdMobile.iPhone
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (txtName != null) {
-				txtName.Dispose ();
-				txtName = null;
+			if (activityView != null) {
+				activityView.Dispose ();
+				activityView = null;
 			}
 
 			if (btnSave != null) {
@@ -60,9 +63,14 @@ namespace etcdMobile.iPhone
 				txtAddress = null;
 			}
 
-			if (activityView != null) {
-				activityView.Dispose ();
-				activityView = null;
+			if (txtName != null) {
+				txtName.Dispose ();
+				txtName = null;
+			}
+
+			if (btnVerify != null) {
+				btnVerify.Dispose ();
+				btnVerify = null;
 			}
 		}
 	}

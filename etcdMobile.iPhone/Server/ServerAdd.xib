@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12E4022" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="activityView" destination="C0V-NC-xnf" id="rO8-K9-YVF"/>
                 <outlet property="btnSave" destination="PsO-ra-SIQ" id="fGb-sq-cii"/>
+                <outlet property="btnVerify" destination="iYW-bG-H30" id="08a-YV-NIz"/>
                 <outlet property="imgResponse" destination="99n-xs-Is5" id="LTo-5v-fBD"/>
                 <outlet property="lblResponse" destination="iMQ-yN-SBy" id="YSb-Ih-uFP"/>
                 <outlet property="txtAddress" destination="gKJ-4B-YG2" id="dqS-j3-7Cw"/>
@@ -35,6 +36,7 @@
                     <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <items>
+                        <barButtonItem title="Verify" id="iYW-bG-H30"/>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="kaa-Di-zLB"/>
                         <barButtonItem systemItem="save" id="PsO-ra-SIQ"/>
                     </items>

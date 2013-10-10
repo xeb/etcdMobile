@@ -11,12 +11,14 @@ namespace etcdMobile.iPhone.Common
 		private UITableView _tbl;
 		private List<Server> _servers;
 		private SqlCache _sqlCache;
+		private UINavigationController _nav;
 		public EventHandler ItemDeleted;
 		
-		public ServerSource(SqlCache sqlCache, UITableView tbl)
+		public ServerSource(UINavigationController nav, SqlCache sqlCache, UITableView tbl)
 		{
 			_tbl = tbl;
 			_sqlCache = sqlCache;
+			_nav = nav;
 			
 			_tbl.Source = this;
 
@@ -97,27 +99,11 @@ namespace etcdMobile.iPhone.Common
 			var tblCell = tableView.DequeueReusableCell(_cellName) as ServerListCell;
 			if (tblCell == null)
         	{
-//				tblCell = new ServerListCell(UITableViewCellStyle.Default, _cellName);
-				tblCell = ServerListCell.Create ();
+				tblCell = ServerListCell.Create (_nav, cell);
         	}
             
 			tblCell.Name = cell.Name;
 			tblCell.Url = cell.BaseUrl;
-
-//            tblCell.BackgroundColor = UIColor.Clear;
-//            tblCell.TextLabel.Text = cell.Name;
-//            tblCell.TextLabel.Font = UIFont.BoldSystemFontOfSize(14f);
-//            
-//            tblCell.Frame = new RectangleF(tblCell.Frame.X, tblCell.Frame.Y, tblCell.Frame.Width, tblCell.Frame.Height * 2);
-//            
-//            var f = tblCell.TextLabel.Frame;
-//            tblCell.TextLabel.Frame = new RectangleF(f.X , f.Y - 20, f.Width, f.Height);
-//            
-//            var lblUrl = new UILabel();
-//            lblUrl.Font = UIFont.SystemFontOfSize(12);
-//            lblUrl.Text = cell.BaseUrl;
-//            lblUrl.Frame = new RectangleF(f.X, f.Y + 15, f.Width, f.Height);
-//           	tblCell.Add(lblUrl);
             
             return tblCell;
         }
