@@ -39,7 +39,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\etcd-mobile.Core\etcdMobile.Core.csproj">
+    <ProjectReference Include="..\etcdMobile.Core\etcdMobile.Core.csproj">
       <Project>{1AB1705B-C922-4624-8510-0879AE8FA5E1}</Project>
       <Name>etcdMobile.Core</Name>
     </ProjectReference>

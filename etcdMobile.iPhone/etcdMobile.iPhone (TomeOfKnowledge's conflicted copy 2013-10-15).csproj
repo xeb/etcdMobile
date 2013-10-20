@@ -23,8 +23,7 @@
     <MtouchLink>None</MtouchLink>
     <ConsolePause>false</ConsolePause>
     <MtouchDebug>true</MtouchDebug>
-    <MtouchI18n>
-    </MtouchI18n>
+    <MtouchI18n />
     <MtouchArch>ARMv7</MtouchArch>
     <MtouchSdkVersion>7.0</MtouchSdkVersion>
   </PropertyGroup>
@@ -48,8 +47,7 @@
     <MtouchDebug>true</MtouchDebug>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <IpaPackageName>
-    </IpaPackageName>
+    <IpaPackageName />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -69,11 +67,9 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <BuildIpa>true</BuildIpa>
     <ConsolePause>false</ConsolePause>
-    <CodesignProvision>DAD445FB-DF3A-490D-913D-46DEAC054730</CodesignProvision>
-    <IpaPackageName>
-    </IpaPackageName>
-    <MtouchI18n>
-    </MtouchI18n>
+    <CodesignProvision>4591A127-888F-4465-952B-5A486430908B</CodesignProvision>
+    <IpaPackageName />
+    <MtouchI18n />
     <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
@@ -99,7 +95,6 @@
     <Folder Include="Common\" />
     <Folder Include="Images\" />
     <Folder Include="Server\" />
-    <Folder Include="Keys\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -125,19 +120,6 @@
     <Compile Include="Server\ServerListCell.designer.cs">
       <DependentUpon>ServerListCell.cs</DependentUpon>
     </Compile>
-    <Compile Include="Keys\KeyList.cs" />
-    <Compile Include="Keys\KeyList.designer.cs">
-      <DependentUpon>KeyList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Keys\KeySource.cs" />
-    <Compile Include="Keys\KeyListCell.cs" />
-    <Compile Include="Keys\KeyListCell.designer.cs">
-      <DependentUpon>KeyListCell.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Keys\KeyAdd.cs" />
-    <Compile Include="Keys\KeyAdd.designer.cs">
-      <DependentUpon>KeyAdd.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -162,8 +144,5 @@
     <InterfaceDefinition Include="Server\ServerAdd.xib" />
     <InterfaceDefinition Include="Server\ServerList.xib" />
     <InterfaceDefinition Include="Server\ServerListCell.xib" />
-    <InterfaceDefinition Include="Keys\KeyList.xib" />
-    <InterfaceDefinition Include="Keys\KeyListCell.xib" />
-    <InterfaceDefinition Include="Keys\KeyAdd.xib" />
   </ItemGroup>
 </Project>

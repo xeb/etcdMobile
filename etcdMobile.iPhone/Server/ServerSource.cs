@@ -30,7 +30,8 @@ namespace etcdMobile.iPhone.Common
 			_servers = _sqlCache.GetServers();
 			_tbl.ReloadData();
 		}
-		
+
+
 		public override bool CanEditRow (UITableView tableView, NSIndexPath indexPath)
 		{
 			return true;
@@ -82,7 +83,9 @@ namespace etcdMobile.iPhone.Common
         
 		public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
         {   	
-    		var cell = _servers[indexPath.Row];
+    		var cell = _servers[indexPath.Row] as Server;
+			var keyList = new KeyList (cell);
+			_nav.PushViewController (keyList, true);
     	}
         
         public override int NumberOfSections (UITableView tableView)
@@ -104,7 +107,8 @@ namespace etcdMobile.iPhone.Common
             
 			tblCell.Name = cell.Name;
 			tblCell.Url = cell.BaseUrl;
-            
+			tblCell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
+
             return tblCell;
         }
 	}

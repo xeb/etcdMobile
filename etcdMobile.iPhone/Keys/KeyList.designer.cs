@@ -9,22 +9,14 @@ using System.CodeDom.Compiler;
 
 namespace etcdMobile.iPhone
 {
-	[Register ("ServerList")]
-	partial class ServerList
+	[Register ("KeyList")]
+	partial class KeyList
 	{
-		[Outlet]
-		MonoTouch.UIKit.UILabel lbl { get; set; }
-
 		[Outlet]
 		MonoTouch.UIKit.UITableView tbl { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (lbl != null) {
-				lbl.Dispose ();
-				lbl = null;
-			}
-
 			if (tbl != null) {
 				tbl.Dispose ();
 				tbl = null;

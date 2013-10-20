@@ -9,14 +9,17 @@ using System.CodeDom.Compiler;
 
 namespace etcdMobile.iPhone
 {
-	[Register ("ServerList")]
-	partial class ServerList
+	[Register ("KeyListCell")]
+	partial class KeyListCell
 	{
+		[Outlet]
+		MonoTouch.UIKit.UIImageView img { get; set; }
+
 		[Outlet]
 		MonoTouch.UIKit.UILabel lbl { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UITableView tbl { get; set; }
+		MonoTouch.UIKit.UISwitch swtch { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
@@ -25,9 +28,14 @@ namespace etcdMobile.iPhone
 				lbl = null;
 			}
 
-			if (tbl != null) {
-				tbl.Dispose ();
-				tbl = null;
+			if (swtch != null) {
+				swtch.Dispose ();
+				swtch = null;
+			}
+
+			if (img != null) {
+				img.Dispose ();
+				img = null;
 			}
 		}
 	}

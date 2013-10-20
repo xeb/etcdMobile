@@ -20,8 +20,8 @@ namespace etcdMobile.Core
 		public string Value {get;set;}	
 		public int Index {get;set;}
 		public bool Dir {get;set;}
-		public DateTime Expiration {get;set;}
-		public int Ttl {get;set;}
+		public string Expiration {get;set;}
+		public int? Ttl {get;set;}
 	}
 }
 

@@ -12,6 +12,7 @@ namespace etcdMobile.Core
 	public class EtcdClient
 	{
 		private string _baseUrl;
+		private const string _apiRoot = "v1/keys";
 		public EtcdClient (string baseUrl)
 		{
 			_baseUrl = ModifyBaseUrl(baseUrl);
@@ -42,7 +43,7 @@ namespace etcdMobile.Core
 		
 		public List<EtcdElement> GetKeys(string parent = "")
 		{
-			var url = _baseUrl + "v1/keys/" + parent;
+			var url = _baseUrl + _apiRoot + parent;
 			var result = HttpGet(url);
 			return JsonConvert.DeserializeObject<List<EtcdElement>>(result);
 		}
@@ -54,7 +55,29 @@ namespace etcdMobile.Core
 			
 			return GetKeys(ele.Key);
 		}
-		
+
+		public void SaveKey(EtcdElement key)
+		{
+			var formValues = new Dictionary<string,string> ();
+			if (key.Ttl.HasValue)
+			{
+				formValues.Add ("ttl", key.Ttl.Value.ToString());
+			}
+
+			formValues.Add ("value", key.Value);
+
+			var url = _baseUrl + _apiRoot + key.Key;
+			HttpPostFormValues (url, formValues);
+		}
+
+		public void DeleteKey(EtcdElement key)
+		{
+			var url = _baseUrl + _apiRoot + key.Key;
+			var request = HttpWebRequest.Create(url);
+			request.Method = "DELETE";
+			ReadResponse(request);
+		}
+
 		private string HttpGet(string url)
 		{
 			var request = HttpWebRequest.Create(url);
