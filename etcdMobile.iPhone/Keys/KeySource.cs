@@ -2,6 +2,7 @@ using System;
 using MonoTouch.Foundation;
 using System.Drawing;
 using MonoTouch.UIKit;
+using System.Linq;
 using etcdMobile.iPhone.Common;
 using etcdMobile.Core;
 using System.Collections.Generic;
@@ -12,16 +13,16 @@ namespace etcdMobile.iPhone.Keys
 	{
 		private EtcdElement _parent;
 		private Server _server;
-		private UITableView _tbl;
+		private UITableView _tbl; // I don't like this tight coupling
 		private List<EtcdElement> _keys;
 		private UINavigationController _nav;
-		private SqlCache _sqlCache;
+//		private SqlCache _sqlCache;
 		public EventHandler ItemDeleted;
 
 		public KeySource(UINavigationController nav, Server server, EtcdElement parent, SqlCache sqlCache, UITableView tbl)
 		{
 			_tbl = tbl;
-			_sqlCache = sqlCache;
+//			_sqlCache = sqlCache;
 			_nav = nav;
 			_server = server;
 			_parent = parent;
@@ -42,7 +43,14 @@ namespace etcdMobile.iPhone.Keys
 				_keys = _server.Client.GetKeys ();
 			}
 
+			_keys = _keys.OrderBy (k => k.Key).ToList ();
+
 			_tbl.ReloadData();
+		}
+
+		public void Refresh(object sender, EventArgs e)
+		{
+			Refresh ();
 		}
 
 		public override bool CanEditRow (UITableView tableView, NSIndexPath indexPath)
@@ -85,6 +93,10 @@ namespace etcdMobile.iPhone.Keys
 			}
 		}
 
+		public List<EtcdElement> Keys 
+		{
+			get { return _keys; }
+		}
 
 		public int Count
 		{
@@ -107,6 +119,7 @@ namespace etcdMobile.iPhone.Keys
 			else
 			{
 				var keyAdd = new KeyAdd (_server, cell);
+				keyAdd.OnSave += Refresh;
 				_nav.PushViewController (keyAdd, true);
 			}
 		}
@@ -116,12 +129,12 @@ namespace etcdMobile.iPhone.Keys
 			return 1;
 		}
 
-		private readonly string _cellName = "KeyCell";
+		private readonly string _cellName = "KeyValueListCell";
 
 		public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
 		{
 			EtcdElement cell = _keys[indexPath.Row];
-
+			
 			var tblCell = tableView.DequeueReusableCell(_cellName) as KeyListCell;
 			if (tblCell == null)
 			{

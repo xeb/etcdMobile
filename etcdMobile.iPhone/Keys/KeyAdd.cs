@@ -12,9 +12,15 @@ namespace etcdMobile.iPhone
 	{
 		private Server _server;
 		private EtcdElement _key;
+		private string _parentKey;
 
-		public KeyAdd(Server server) : this(server, null)
+		public KeyAdd(Server server, string parentKey) : this(server, (EtcdElement)null)
 		{
+			_parentKey = parentKey;
+			if (!_parentKey.EndsWith ("/"))
+			{
+				_parentKey += "/";
+			}
 		}
 
 		public KeyAdd (Server server, EtcdElement key) : base ("KeyAdd", null)
@@ -22,7 +28,8 @@ namespace etcdMobile.iPhone
 			_server = server;
 			_key = key;
 		}
-		
+
+		public event EventHandler OnSave;
 
 		public override void ViewWillAppear (bool animated)
 		{
@@ -52,24 +59,26 @@ namespace etcdMobile.iPhone
 				txt.ShouldReturn = DoReturn;
 			}
 
+			txtTTL.Text = string.Empty;
+
 			if (_key != null)
 			{
 				Title = _key.KeyName;
 				txtKey.Text = _key.Key;
 				txtValue.Text = _key.Value;
 
-				lblExpiration.Hidden = !_key.Ttl.HasValue;
-				lblExpires.Hidden = !_key.Ttl.HasValue;
-				btnClearTTL.Hidden = !_key.Ttl.HasValue;
+				if (_key.Ttl.HasValue)
+				{
+					txtTTL.Text = _key.Ttl.Value.ToString();
+				}
 
-				txtTTL.Text = _key.Ttl.HasValue ? _key.Ttl.Value.ToString () : "";
-
-				stpValue.Hidden = true;
-				swtch.Hidden = true;
+				lblIndex.Text = _key.Index.ToString();
 			}
 			else
 			{
 				Title = "New Key";
+				txtKey.Text = _parentKey;
+				txtTTL.Text = "";
 			}
 
 			btnSave.Clicked += (sender, e) => 
@@ -95,6 +104,11 @@ namespace etcdMobile.iPhone
 				if(_key != null && _key.Key != txtKey.Text)
 				{
 					_server.Client.DeleteKey(_key);
+				}
+
+				if(OnSave != null)
+				{
+					OnSave(this, null);
 				}
 
 				NavigationController.PopViewControllerAnimated(true);

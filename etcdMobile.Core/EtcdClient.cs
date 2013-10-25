@@ -66,16 +66,24 @@ namespace etcdMobile.Core
 
 			formValues.Add ("value", key.Value);
 
-			var url = _baseUrl + _apiRoot + key.Key;
+			var url = _baseUrl + _apiRoot + GetKeyValue(key);
 			HttpPostFormValues (url, formValues);
 		}
 
 		public void DeleteKey(EtcdElement key)
 		{
-			var url = _baseUrl + _apiRoot + key.Key;
+			var url = _baseUrl + _apiRoot + GetKeyValue(key);
 			var request = HttpWebRequest.Create(url);
 			request.Method = "DELETE";
 			ReadResponse(request);
+		}
+
+		private string GetKeyValue(EtcdElement key)
+		{
+			var keyValue = key.Key;
+			if(!keyValue.StartsWith("/"))
+				keyValue = "/" + keyValue;
+			return keyValue;
 		}
 
 		private string HttpGet(string url)

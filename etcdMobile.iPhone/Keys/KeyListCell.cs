@@ -17,14 +17,34 @@ namespace etcdMobile.iPhone
 
 		public string KeyName 
 		{
-			get { return lbl.Text; }
-			set { lbl.Text = value; }
+			get { return lblKey.Text; }
+			set { lblKey.Text = value; }
 		}
 
-
-
+//		public KeyListCell(UINavigationController nav, EtcdElement key)
+//		{
+//			_nav = nav;
+//			_key = key;
+//			KeyName = key.KeyName;
+//			
+//			if (key.Dir)
+//			{
+//				lblKey.TextColor = UIColor.DarkGray;
+//			}
+//			else
+//			{
+//				lblKey.Font = UIFont.BoldSystemFontOfSize (14f); 
+//			}
+//		}
+//
 		public KeyListCell (IntPtr handle) : base (handle)
 		{
+		}
+
+		[Export("initWithCoder:")]
+		public KeyListCell (NSCoder coder) : base(coder)
+		{
+
 		}
 
 		public static KeyListCell Create (UINavigationController nav, EtcdElement key)
@@ -33,16 +53,15 @@ namespace etcdMobile.iPhone
 			
 			item._nav = nav;
 			item._key = key;
-			item.swtch.Hidden = true;
 			item.KeyName = key.KeyName;
 
 			if (key.Dir)
 			{
-				item.lbl.TextColor = UIColor.DarkGray;
+				item.lblKey.TextColor = UIColor.DarkGray;
 			}
 			else
 			{
-				item.lbl.Font = UIFont.BoldSystemFontOfSize (14f); 
+				item.lblKey.Font = UIFont.BoldSystemFontOfSize (14f); 
 			}
 
 			return item;

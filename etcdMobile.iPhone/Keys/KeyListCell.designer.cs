@@ -13,29 +13,13 @@ namespace etcdMobile.iPhone
 	partial class KeyListCell
 	{
 		[Outlet]
-		MonoTouch.UIKit.UIImageView img { get; set; }
-
-		[Outlet]
-		MonoTouch.UIKit.UILabel lbl { get; set; }
-
-		[Outlet]
-		MonoTouch.UIKit.UISwitch swtch { get; set; }
+		MonoTouch.UIKit.UILabel lblKey { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (lbl != null) {
-				lbl.Dispose ();
-				lbl = null;
-			}
-
-			if (swtch != null) {
-				swtch.Dispose ();
-				swtch = null;
-			}
-
-			if (img != null) {
-				img.Dispose ();
-				img = null;
+			if (lblKey != null) {
+				lblKey.Dispose ();
+				lblKey = null;
 			}
 		}
 	}

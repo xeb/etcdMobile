@@ -13,31 +13,13 @@ namespace etcdMobile.iPhone
 	partial class KeyAdd
 	{
 		[Outlet]
-		MonoTouch.UIKit.UIButton btnClearTTL { get; set; }
-
-		[Outlet]
 		MonoTouch.UIKit.UIBarButtonItem btnDelete { get; set; }
 
 		[Outlet]
 		MonoTouch.UIKit.UIBarButtonItem btnSave { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UILabel lblExpiration { get; set; }
-
-		[Outlet]
-		MonoTouch.UIKit.UILabel lblExpires { get; set; }
-
-		[Outlet]
-		MonoTouch.UIKit.UILabel lblWarning { get; set; }
-
-		[Outlet]
-		MonoTouch.UIKit.UIStepper stpTTL { get; set; }
-
-		[Outlet]
-		MonoTouch.UIKit.UIStepper stpValue { get; set; }
-
-		[Outlet]
-		MonoTouch.UIKit.UISwitch swtch { get; set; }
+		MonoTouch.UIKit.UILabel lblIndex { get; set; }
 
 		[Outlet]
 		MonoTouch.UIKit.UITextField txtKey { get; set; }
@@ -50,34 +32,19 @@ namespace etcdMobile.iPhone
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (btnClearTTL != null) {
-				btnClearTTL.Dispose ();
-				btnClearTTL = null;
+			if (btnDelete != null) {
+				btnDelete.Dispose ();
+				btnDelete = null;
 			}
 
-			if (lblExpiration != null) {
-				lblExpiration.Dispose ();
-				lblExpiration = null;
+			if (btnSave != null) {
+				btnSave.Dispose ();
+				btnSave = null;
 			}
 
-			if (lblExpires != null) {
-				lblExpires.Dispose ();
-				lblExpires = null;
-			}
-
-			if (stpTTL != null) {
-				stpTTL.Dispose ();
-				stpTTL = null;
-			}
-
-			if (stpValue != null) {
-				stpValue.Dispose ();
-				stpValue = null;
-			}
-
-			if (swtch != null) {
-				swtch.Dispose ();
-				swtch = null;
+			if (lblIndex != null) {
+				lblIndex.Dispose ();
+				lblIndex = null;
 			}
 
 			if (txtKey != null) {
@@ -93,21 +60,6 @@ namespace etcdMobile.iPhone
 			if (txtValue != null) {
 				txtValue.Dispose ();
 				txtValue = null;
-			}
-
-			if (btnSave != null) {
-				btnSave.Dispose ();
-				btnSave = null;
-			}
-
-			if (btnDelete != null) {
-				btnDelete.Dispose ();
-				btnDelete = null;
-			}
-
-			if (lblWarning != null) {
-				lblWarning.Dispose ();
-				lblWarning = null;
 			}
 		}
 	}

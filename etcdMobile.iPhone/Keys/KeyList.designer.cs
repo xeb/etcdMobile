@@ -13,13 +13,37 @@ namespace etcdMobile.iPhone
 	partial class KeyList
 	{
 		[Outlet]
-		MonoTouch.UIKit.UITableView tbl { get; set; }
+		MonoTouch.UIKit.UILabel lblDirs { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UILabel lblIndex { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UILabel lblKeys { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UITableView table { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (tbl != null) {
-				tbl.Dispose ();
-				tbl = null;
+			if (table != null) {
+				table.Dispose ();
+				table = null;
+			}
+
+			if (lblIndex != null) {
+				lblIndex.Dispose ();
+				lblIndex = null;
+			}
+
+			if (lblKeys != null) {
+				lblKeys.Dispose ();
+				lblKeys = null;
+			}
+
+			if (lblDirs != null) {
+				lblDirs.Dispose ();
+				lblDirs = null;
 			}
 		}
 	}

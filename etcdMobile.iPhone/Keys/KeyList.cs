@@ -28,7 +28,7 @@ namespace etcdMobile.iPhone
 
 		public override void ViewWillAppear (bool animated)
 		{
-			Refresh ();
+//			Refresh ();
 
 			base.ViewWillAppear (animated);
 			NavigationController.NavigationBarHidden = false;
@@ -38,10 +38,19 @@ namespace etcdMobile.iPhone
 		{
 			_source.Refresh ();
 
-			if(_source.Count == 0)
+			if (_source.Count == 0)
 			{
-				// Shouldn't happen, go to ValueEdit  
+				// Shouldn't happen, go to ValueEdit  ?
 			}
+			else
+			{
+				SetStats ();
+			}
+		}
+
+		public void Refresh(object sender, EventArgs e)
+		{
+			Refresh ();
 		}
 
 		public override void DidReceiveMemoryWarning ()
@@ -63,16 +72,20 @@ namespace etcdMobile.iPhone
 			var btnAdd = new UIBarButtonItem(UIBarButtonSystemItem.Add);
 			btnAdd.Clicked += (sender, e) => 
 			{
-				// TODO: Add Key
+				var keyAdd = new KeyAdd(_server, _parentKey != null ? _parentKey.Key : "/");
+				keyAdd.OnSave += Refresh;
+				NavigationController.PushViewController(keyAdd, true);
 			};
 
 			NavigationItem.RightBarButtonItems = new[] { btnAdd }.ToArray();
 
-			tbl.BackgroundColor = UIColor.Clear;
-			tbl.SeparatorStyle = UITableViewCellSeparatorStyle.None;
+			table.BackgroundColor = UIColor.Clear;
+			table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 
-			_source = new KeySource(NavigationController, _server, _parentKey, _sqlCache, tbl);
-			_source.ItemDeleted += (sender, e) => { Refresh(); };
+			_source = new KeySource(NavigationController, _server, _parentKey, _sqlCache, table);
+			_source.ItemDeleted += Refresh;
+
+			SetStats ();
 
 			var refresh = new UIRefreshControl();
 			refresh.ValueChanged += (sender, e) => 
@@ -81,7 +94,14 @@ namespace etcdMobile.iPhone
 				refresh.EndRefreshing();
 			};
 
-			tbl.Add(refresh);
+			table.Add(refresh);
+		}
+
+		private void SetStats()
+		{
+			lblIndex.Text = _source.Keys.First ().Index.ToString();
+			lblKeys.Text = _source.Keys.Count.ToString();
+			lblDirs.Text = _source.Keys.Count (k => k.Dir).ToString();
 		}
 	}
 }

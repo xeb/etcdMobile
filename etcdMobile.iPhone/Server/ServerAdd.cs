@@ -52,8 +52,15 @@ namespace etcdMobile.iPhone
 
 		public override void ViewDidLoad ()
 		{
-			Title = "Add New Server";
-			
+			if (_serverForEdit == null)
+			{
+				Title = "Add New Server";
+			}
+			else
+			{
+				Title = "Edit " + _serverForEdit.Name;
+			}
+
 			base.ViewDidLoad ();
 			
 			_sqlCache = new SqlCache();

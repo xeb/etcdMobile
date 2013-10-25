@@ -1,6 +1,6 @@
 using System;
 
-namespace etcdmobile.Core
+namespace etcdMobile.Core
 {
 	public class ValueTypeParser
 	{
