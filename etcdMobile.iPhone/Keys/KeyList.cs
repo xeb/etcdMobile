@@ -82,7 +82,7 @@ namespace etcdMobile.iPhone
 			table.BackgroundColor = UIColor.Clear;
 			table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 
-			_source = new KeySource(NavigationController, _server, _parentKey, _sqlCache, table);
+			_source = new KeySource(NavigationController, _server, _parentKey, _sqlCache, new ReloadableTableWrapper(table));
 			_source.ItemDeleted += Refresh;
 
 			SetStats ();
@@ -102,6 +102,25 @@ namespace etcdMobile.iPhone
 			lblIndex.Text = _source.Keys.First ().Index.ToString();
 			lblKeys.Text = _source.Keys.Count.ToString();
 			lblDirs.Text = _source.Keys.Count (k => k.Dir).ToString();
+		}
+
+		private class ReloadableTableWrapper : IReloadableTableView
+		{
+			private UITableView _tbl;
+			public ReloadableTableWrapper(UITableView tbl)
+			{
+				_tbl = tbl;
+			}
+
+			public void ReloadData()
+			{
+				_tbl.ReloadData ();
+			}
+
+			public UITableViewSource Source
+			{
+				set { _tbl.Source = value; }
+			}
 		}
 	}
 }

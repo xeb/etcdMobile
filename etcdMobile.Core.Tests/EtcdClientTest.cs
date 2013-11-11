@@ -85,9 +85,15 @@ namespace etcdMobile.Core.Tests
 		{
 			var key = new EtcdElement ();
 			key.Expiration = "2013-10-20T12:51:25.86327532-07:00";
+			key.Expiration = "2013-10-20T12:51:25";
 
-			var date = DateTime.ParseExact (key.Expiration, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+			var date = DateTime.ParseExact (key.Expiration, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture);
 			Assert.AreEqual (date.Year, 2013);
+			Assert.AreEqual (date.Month, 10);
+			Assert.AreEqual (date.Day, 20);
+			Assert.AreEqual (date.Hour, 12);
+			Assert.AreEqual (date.Minute, 51);
+			Assert.AreEqual (date.Second, 25);
 		}
 	}
 }

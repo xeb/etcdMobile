@@ -21,22 +21,6 @@ namespace etcdMobile.iPhone
 			set { lblKey.Text = value; }
 		}
 
-//		public KeyListCell(UINavigationController nav, EtcdElement key)
-//		{
-//			_nav = nav;
-//			_key = key;
-//			KeyName = key.KeyName;
-//			
-//			if (key.Dir)
-//			{
-//				lblKey.TextColor = UIColor.DarkGray;
-//			}
-//			else
-//			{
-//				lblKey.Font = UIFont.BoldSystemFontOfSize (14f); 
-//			}
-//		}
-//
 		public KeyListCell (IntPtr handle) : base (handle)
 		{
 		}

@@ -139,6 +139,7 @@
     <Compile Include="Keys\KeyAdd.designer.cs">
       <DependentUpon>KeyAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Keys\IReloadableTableView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

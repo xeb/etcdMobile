@@ -13,16 +13,14 @@ namespace etcdMobile.iPhone.Keys
 	{
 		private EtcdElement _parent;
 		private Server _server;
-		private UITableView _tbl; // I don't like this tight coupling
+		private IReloadableTableView _tbl;
 		private List<EtcdElement> _keys;
 		private UINavigationController _nav;
-//		private SqlCache _sqlCache;
 		public EventHandler ItemDeleted;
 
-		public KeySource(UINavigationController nav, Server server, EtcdElement parent, SqlCache sqlCache, UITableView tbl)
+		public KeySource(UINavigationController nav, Server server, EtcdElement parent, SqlCache sqlCache, IReloadableTableView tbl)
 		{
 			_tbl = tbl;
-//			_sqlCache = sqlCache;
 			_nav = nav;
 			_server = server;
 			_parent = parent;
