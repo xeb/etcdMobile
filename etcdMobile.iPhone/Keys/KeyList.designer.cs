@@ -13,6 +13,12 @@ namespace etcdMobile.iPhone
 	partial class KeyList
 	{
 		[Outlet]
+		MonoTouch.UIKit.UIBarButtonItem btnSearch { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UIBarButtonItem btnSort { get; set; }
+
+		[Outlet]
 		MonoTouch.UIKit.UILabel lblDirs { get; set; }
 
 		[Outlet]
@@ -26,9 +32,9 @@ namespace etcdMobile.iPhone
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (table != null) {
-				table.Dispose ();
-				table = null;
+			if (lblDirs != null) {
+				lblDirs.Dispose ();
+				lblDirs = null;
 			}
 
 			if (lblIndex != null) {
@@ -41,9 +47,19 @@ namespace etcdMobile.iPhone
 				lblKeys = null;
 			}
 
-			if (lblDirs != null) {
-				lblDirs.Dispose ();
-				lblDirs = null;
+			if (table != null) {
+				table.Dispose ();
+				table = null;
+			}
+
+			if (btnSort != null) {
+				btnSort.Dispose ();
+				btnSort = null;
+			}
+
+			if (btnSearch != null) {
+				btnSearch.Dispose ();
+				btnSearch = null;
 			}
 		}
 	}

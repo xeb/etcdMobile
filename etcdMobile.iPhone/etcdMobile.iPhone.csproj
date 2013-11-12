@@ -140,6 +140,7 @@
       <DependentUpon>KeyAdd.cs</DependentUpon>
     </Compile>
     <Compile Include="Keys\IReloadableTableView.cs" />
+    <Compile Include="Common\SortType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

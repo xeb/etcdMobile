@@ -15,6 +15,7 @@ namespace etcdMobile.iPhone
 		private EtcdElement _parentKey;
 		private KeySource _source;
 		private SqlCache _sqlCache;
+		private SortType _sort;
 		
 		public KeyList (Server server) : base ("KeyList", null)
 		{
@@ -36,7 +37,7 @@ namespace etcdMobile.iPhone
 
 		public void Refresh()
 		{
-			_source.Refresh ();
+			_source.Refresh (_sort);
 
 			if (_source.Count == 0)
 			{
@@ -76,7 +77,7 @@ namespace etcdMobile.iPhone
 				keyAdd.OnSave += Refresh;
 				NavigationController.PushViewController(keyAdd, true);
 			};
-
+		
 			NavigationItem.RightBarButtonItems = new[] { btnAdd }.ToArray();
 
 			table.BackgroundColor = UIColor.Clear;
@@ -86,6 +87,33 @@ namespace etcdMobile.iPhone
 			_source.ItemDeleted += Refresh;
 
 			SetStats ();
+			
+			var prompt = new UIAlertView("", "Sort by..", null, "Name Ascending", "TTL Ascending", "TTL Descending", "Name Descending");
+			prompt.Clicked += (sender, e) => 
+			{
+				switch(e.ButtonIndex)
+				{
+					case 0:
+						_sort = SortType.NameAsc;
+						break;
+					case 1:
+						_sort = SortType.TtlAsc;
+						break;
+					case 2:
+						_sort = SortType.TtlDesc;
+						break;
+					case 3:
+						_sort = SortType.NameDesc;
+						break;
+				}
+
+				Refresh();
+			};
+
+			btnSort.Clicked += (sender, e) => 
+			{
+				prompt.Show();
+			};
 
 			var refresh = new UIRefreshControl();
 			refresh.ValueChanged += (sender, e) => 

@@ -60,6 +60,7 @@ namespace etcdMobile.iPhone
 			}
 
 			txtTTL.Text = string.Empty;
+
 			lblDateUtc.Hidden = true;
 			lblDateLocal.Hidden = true;
 

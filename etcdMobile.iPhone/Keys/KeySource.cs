@@ -30,7 +30,12 @@ namespace etcdMobile.iPhone.Keys
 			Refresh();
 		}
 
-		public virtual void Refresh() // TODO: include parent
+		public virtual void Refresh()
+		{
+			Refresh (SortType.NameAsc); // pull from SQL Cache
+		}
+
+		public virtual void Refresh(SortType sortType) // TODO: include parent
 		{
 			if (_parent != null)
 			{
@@ -41,7 +46,21 @@ namespace etcdMobile.iPhone.Keys
 				_keys = _server.Client.GetKeys ();
 			}
 
-			_keys = _keys.OrderBy (k => k.Key).ToList ();
+			switch (sortType)
+			{
+				case SortType.NameAsc:
+					_keys = _keys.OrderBy (k => k.Key).ToList ();
+					break;
+				case SortType.NameDesc:
+					_keys = _keys.OrderByDescending (k => k.Key).ToList ();
+					break;
+				case SortType.TtlAsc:
+					_keys = _keys.OrderBy (k => k.Ttl.HasValue ? k.Ttl.Value : -1).ToList ();
+					break;
+				case SortType.TtlDesc:
+					_keys = _keys.OrderByDescending (k => k.Ttl.HasValue ? k.Ttl.Value : -1).ToList ();
+					break;
+			}
 
 			_tbl.ReloadData();
 		}
