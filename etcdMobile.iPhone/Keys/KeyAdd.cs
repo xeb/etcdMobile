@@ -60,6 +60,8 @@ namespace etcdMobile.iPhone
 			}
 
 			txtTTL.Text = string.Empty;
+			lblDateUtc.Hidden = true;
+			lblDateLocal.Hidden = true;
 
 			if (_key != null)
 			{
@@ -70,6 +72,12 @@ namespace etcdMobile.iPhone
 				if (_key.Ttl.HasValue)
 				{
 					txtTTL.Text = _key.Ttl.Value.ToString();
+
+					if(_key.ExpirationDate.HasValue)
+					{
+						var utc = _key.ExpirationDate.Value.ToUniversalTime ();
+						SetDatesFromUtcDate (utc);
+					}
 				}
 
 				lblIndex.Text = _key.Index.ToString();
@@ -113,6 +121,14 @@ namespace etcdMobile.iPhone
 
 				NavigationController.PopViewControllerAnimated(true);
 			};
+		}
+
+		private void SetDatesFromUtcDate(DateTime utc)
+		{	
+			lblDateUtc.Hidden = false;
+			lblDateLocal.Hidden = false;
+			lblDateUtc.Text = utc.ToString ("yyyy-MM-dd HH:mm:ss") + " UTC";
+			lblDateLocal.Text = utc.ToLocalTime ().ToString ("yyyy-M-d hh:mm:sstt") + " Local";
 		}
 	}
 }

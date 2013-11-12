@@ -84,16 +84,18 @@ namespace etcdMobile.Core.Tests
 		public void DeserializeDateTime()
 		{
 			var key = new EtcdElement ();
-			key.Expiration = "2013-10-20T12:51:25.86327532-07:00";
-			key.Expiration = "2013-10-20T12:51:25";
+			key.Expiration = "2013-11-11T22:17:35.256488204-08:00";
 
-			var date = DateTime.ParseExact (key.Expiration, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture);
+			Assert.IsTrue (key.ExpirationDate.HasValue);
+
+			var date = key.ExpirationDate.Value;
 			Assert.AreEqual (date.Year, 2013);
-			Assert.AreEqual (date.Month, 10);
-			Assert.AreEqual (date.Day, 20);
-			Assert.AreEqual (date.Hour, 12);
-			Assert.AreEqual (date.Minute, 51);
-			Assert.AreEqual (date.Second, 25);
+			Assert.AreEqual (date.Month, 11);
+			Assert.AreEqual (date.Day, 11);
+			Assert.AreEqual (date.Hour, 22);
+			Assert.AreEqual (date.Minute, 17);
+			Assert.AreEqual (date.Second, 35);
+			Assert.AreEqual (date.ToUniversalTime ().Hour, 6);
 		}
 	}
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace etcdMobile.Core
 {
@@ -22,6 +23,23 @@ namespace etcdMobile.Core
 		public bool Dir {get;set;}
 		public string Expiration {get;set;}
 		public int? Ttl {get;set;}
+
+		private DateTime? _expirationDate;
+		public DateTime? ExpirationDate
+		{
+			get
+			{
+				if (_expirationDate != null)
+					return _expirationDate;
+
+				if(string.IsNullOrWhiteSpace(Expiration) || Expiration.Length != 35)
+					return null;
+
+				var exp = Expiration.Substring (0, 26) + Expiration.Substring(Expiration.Length - 6, 6);
+				_expirationDate = DateTime.ParseExact (exp, "yyyy-MM-ddTHH:mm:ss.ffffffzzz", CultureInfo.InvariantCulture);
+				return _expirationDate;
+			}
+		}
 	}
 }
 

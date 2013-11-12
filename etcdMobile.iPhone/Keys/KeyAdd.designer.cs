@@ -19,6 +19,12 @@ namespace etcdMobile.iPhone
 		MonoTouch.UIKit.UIBarButtonItem btnSave { get; set; }
 
 		[Outlet]
+		MonoTouch.UIKit.UILabel lblDateLocal { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UILabel lblDateUtc { get; set; }
+
+		[Outlet]
 		MonoTouch.UIKit.UILabel lblIndex { get; set; }
 
 		[Outlet]
@@ -60,6 +66,16 @@ namespace etcdMobile.iPhone
 			if (txtValue != null) {
 				txtValue.Dispose ();
 				txtValue = null;
+			}
+
+			if (lblDateUtc != null) {
+				lblDateUtc.Dispose ();
+				lblDateUtc = null;
+			}
+
+			if (lblDateLocal != null) {
+				lblDateLocal.Dispose ();
+				lblDateLocal = null;
 			}
 		}
 	}

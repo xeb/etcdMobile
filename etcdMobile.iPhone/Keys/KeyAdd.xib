@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KeyAdd">
             <connections>
                 <outlet property="btnDelete" destination="SPT-Dp-l5m" id="FMi-MD-Ylf"/>
                 <outlet property="btnSave" destination="5Hp-A8-qx3" id="EiX-sR-9sG"/>
+                <outlet property="lblDateLocal" destination="HUU-jT-6b3" id="pWb-mb-iOs"/>
+                <outlet property="lblDateUtc" destination="x8Z-tY-ubs" id="lJx-mH-lTG"/>
                 <outlet property="lblIndex" destination="O8C-gt-DCs" id="P21-Gv-2uw"/>
                 <outlet property="txtKey" destination="5xv-GD-CqC" id="qQm-GV-ZYf"/>
                 <outlet property="txtTTL" destination="fLn-iF-fff" id="1wA-vu-7R4"/>
@@ -35,6 +37,18 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2013-01-02 23:27 UTC" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x8Z-tY-ubs">
+                    <rect key="frame" x="65" y="209" width="235" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2013-01-02 11:27 PM Local" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HUU-jT-6b3">
+                    <rect key="frame" x="65" y="244" width="235" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="O8C-gt-DCs">
                     <rect key="frame" x="85" y="490" width="62" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
