@@ -93,6 +93,9 @@
     <Reference Include="monotouch" />
     <Reference Include="Mono.Data.Sqlite" />
     <Reference Include="System.Data" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -100,6 +103,7 @@
     <Folder Include="Images\" />
     <Folder Include="Server\" />
     <Folder Include="Keys\" />
+    <Folder Include="Preferences\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -141,6 +145,13 @@
     </Compile>
     <Compile Include="Keys\IReloadableTableView.cs" />
     <Compile Include="Common\SortType.cs" />
+    <Compile Include="Preferences\PreferenceList.cs" />
+    <Compile Include="Preferences\PreferenceList.designer.cs">
+      <DependentUpon>PreferenceList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Preferences.cs" />
+    <Compile Include="Common\Globals.cs" />
+    <Compile Include="Common\ISqlCache.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -160,6 +171,9 @@
     <BundleResource Include="Resources\background.png" />
     <BundleResource Include="Images\check.png" />
     <BundleResource Include="Images\xmark.png" />
+    <BundleResource Include="Resources\generic_sorting2-128.png" />
+    <BundleResource Include="Resources\settings-25.png" />
+    <BundleResource Include="Resources\help_filled-25.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Server\ServerAdd.xib" />
@@ -168,5 +182,6 @@
     <InterfaceDefinition Include="Keys\KeyList.xib" />
     <InterfaceDefinition Include="Keys\KeyListCell.xib" />
     <InterfaceDefinition Include="Keys\KeyAdd.xib" />
+    <InterfaceDefinition Include="Preferences\PreferenceList.xib" />
   </ItemGroup>
 </Project>

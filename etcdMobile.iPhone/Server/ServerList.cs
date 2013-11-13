@@ -12,8 +12,9 @@ namespace etcdMobile.iPhone
 	public partial class ServerList : UIViewController
 	{
 		private ServerSource _source;
-		private SqlCache _sqlCache;
+		private ISqlCache _sqlCache;
 		private ServerAdd _serverAddView;
+		private PreferenceList _prefs;
 		
 		public ServerList () : base ("ServerList", null)
 		{
@@ -58,7 +59,8 @@ namespace etcdMobile.iPhone
 			lbl.Frame = new RectangleF(0, View.Bounds.Height / 2 - 50, View.Bounds.Width, 30);
 			lbl.Hidden = true;
 
-			_sqlCache = new SqlCache();
+			_sqlCache = Globals.SqlCache;
+			_prefs = new PreferenceList();
 			
 			var btnAdd = new UIBarButtonItem(UIBarButtonSystemItem.Add);
 			btnAdd.Clicked += (sender, e) => 
@@ -86,6 +88,11 @@ namespace etcdMobile.iPhone
 			};
 			
 			tbl.Add(refresh);
+
+			btnSettings.Clicked += (sender, e) => 
+			{
+				NavigationController.PushViewController(_prefs, true);
+			};
 		}
 	}
 }

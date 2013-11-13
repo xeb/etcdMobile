@@ -7,10 +7,11 @@ using System.Data;
 using System.IO;
 using System.Threading.Tasks;
 using Mono.Data.Sqlite;
+using Newtonsoft.Json;
 
 namespace etcdMobile.iPhone.Common
 {
-	public class SqlCache
+	public class SqlCache : ISqlCache
 	{	
 		private string _dbName = "etcd.d3";
 		
@@ -107,8 +108,10 @@ namespace etcdMobile.iPhone.Common
 				cmd.Parameters.AddWithValue("@Name", name);
 				var result = cmd.ExecuteScalar();
 				
-				if(result != null)
-					returnValue = (T)Convert.ChangeType(result, typeof(T));
+				if (result != null)
+				{
+					returnValue = JsonConvert.DeserializeObject<T>(Convert.ToString(result));
+				}
 			}
 			
 			conn.Close();
@@ -125,7 +128,7 @@ namespace etcdMobile.iPhone.Common
 	    	{
 				cmd.CommandText = "INSERT OR IGNORE INTO Settings (Name, Value) VALUES (@Name, @Value); UPDATE Settings SET Value = @Value WHERE Name = @Name;";
 				cmd.Parameters.AddWithValue("@Name", name);
-				cmd.Parameters.AddWithValue("@Value", value);
+				cmd.Parameters.AddWithValue("@Value", JsonConvert.SerializeObject(value));
 				cmd.ExecuteNonQuery();
 	    	} 
 	    	

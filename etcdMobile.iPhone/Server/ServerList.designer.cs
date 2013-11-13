@@ -13,6 +13,9 @@ namespace etcdMobile.iPhone
 	partial class ServerList
 	{
 		[Outlet]
+		MonoTouch.UIKit.UIBarButtonItem btnSettings { get; set; }
+
+		[Outlet]
 		MonoTouch.UIKit.UILabel lbl { get; set; }
 
 		[Outlet]
@@ -28,6 +31,11 @@ namespace etcdMobile.iPhone
 			if (tbl != null) {
 				tbl.Dispose ();
 				tbl = null;
+			}
+
+			if (btnSettings != null) {
+				btnSettings.Dispose ();
+				btnSettings = null;
 			}
 		}
 	}

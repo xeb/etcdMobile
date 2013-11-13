@@ -10,11 +10,11 @@ namespace etcdMobile.iPhone.Common
 	{
 		private UITableView _tbl;
 		private List<Server> _servers;
-		private SqlCache _sqlCache;
+		private ISqlCache _sqlCache;
 		private UINavigationController _nav;
 		public EventHandler ItemDeleted;
 		
-		public ServerSource(UINavigationController nav, SqlCache sqlCache, UITableView tbl)
+		public ServerSource(UINavigationController nav, ISqlCache sqlCache, UITableView tbl)
 		{
 			_tbl = tbl;
 			_sqlCache = sqlCache;
