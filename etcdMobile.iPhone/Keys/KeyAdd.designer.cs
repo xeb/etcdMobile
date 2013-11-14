@@ -28,6 +28,12 @@ namespace etcdMobile.iPhone
 		MonoTouch.UIKit.UILabel lblIndex { get; set; }
 
 		[Outlet]
+		MonoTouch.UIKit.UILabel lblReadOnly { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UISwitch swtBoolVal { get; set; }
+
+		[Outlet]
 		MonoTouch.UIKit.UITextField txtKey { get; set; }
 
 		[Outlet]
@@ -48,9 +54,24 @@ namespace etcdMobile.iPhone
 				btnSave = null;
 			}
 
+			if (lblDateLocal != null) {
+				lblDateLocal.Dispose ();
+				lblDateLocal = null;
+			}
+
+			if (lblDateUtc != null) {
+				lblDateUtc.Dispose ();
+				lblDateUtc = null;
+			}
+
 			if (lblIndex != null) {
 				lblIndex.Dispose ();
 				lblIndex = null;
+			}
+
+			if (lblReadOnly != null) {
+				lblReadOnly.Dispose ();
+				lblReadOnly = null;
 			}
 
 			if (txtKey != null) {
@@ -68,14 +89,9 @@ namespace etcdMobile.iPhone
 				txtValue = null;
 			}
 
-			if (lblDateUtc != null) {
-				lblDateUtc.Dispose ();
-				lblDateUtc = null;
-			}
-
-			if (lblDateLocal != null) {
-				lblDateLocal.Dispose ();
-				lblDateLocal = null;
+			if (swtBoolVal != null) {
+				swtBoolVal.Dispose ();
+				swtBoolVal = null;
 			}
 		}
 	}

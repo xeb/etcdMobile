@@ -12,13 +12,14 @@ namespace etcdMobile.iPhone.Keys
 	public class KeySource : UITableViewSource
 	{
 		private EtcdElement _parent;
+		private Preferences _prefs;
 		private Server _server;
 		private IReloadableTableView _tbl;
 		private List<EtcdElement> _keys;
 		private UINavigationController _nav;
 		public EventHandler ItemDeleted;
 
-		public KeySource(UINavigationController nav, Server server, EtcdElement parent, SqlCache sqlCache, IReloadableTableView tbl)
+		public KeySource(UINavigationController nav, Server server, EtcdElement parent, IReloadableTableView tbl)
 		{
 			_tbl = tbl;
 			_nav = nav;
@@ -26,6 +27,8 @@ namespace etcdMobile.iPhone.Keys
 			_parent = parent;
 
 			_tbl.Source = this;
+
+			_prefs = Globals.Preferences;
 
 			Refresh();
 		}
@@ -44,6 +47,11 @@ namespace etcdMobile.iPhone.Keys
 			else
 			{
 				_keys = _server.Client.GetKeys ();
+			}
+
+			if (_prefs.HideEtcdDir)
+			{
+				_keys.RemoveAll(k => k.Dir && k.KeyName == "_etcd");
 			}
 
 			switch (sortType)
@@ -77,11 +85,9 @@ namespace etcdMobile.iPhone.Keys
 
 		public override void CommitEditingStyle (UITableView tableView, UITableViewCellEditingStyle editingStyle, NSIndexPath indexPath)
 		{
-			if (editingStyle == UITableViewCellEditingStyle.Delete) 
+			if (_prefs.ReadOnly == false && editingStyle == UITableViewCellEditingStyle.Delete) 
 			{
 				var key = _keys[indexPath.Row];
-
-				// TODO: do the delete
 
 				Refresh(); 
 

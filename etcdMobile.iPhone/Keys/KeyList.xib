@@ -35,7 +35,7 @@
                     <items>
                         <barButtonItem systemItem="search" id="LfW-Q2-pLj"/>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="GJU-7v-buL"/>
-                        <barButtonItem systemItem="action" id="Oi7-J0-1tA"/>
+                        <barButtonItem image="alphabetical_sorting_az-25.png" id="Oi7-J0-1tA"/>
                     </items>
                 </toolbar>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="56" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SVY-LR-ab6">
@@ -88,6 +88,7 @@
         </view>
     </objects>
     <resources>
+        <image name="alphabetical_sorting_az-25.png" width="25" height="25"/>
         <image name="background.png" width="640" height="1136"/>
     </resources>
 </document>

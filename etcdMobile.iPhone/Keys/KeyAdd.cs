@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using etcdMobile.Core;
@@ -11,6 +12,7 @@ namespace etcdMobile.iPhone
 	public partial class KeyAdd : UIViewController
 	{
 		private Server _server;
+		private Preferences _prefs;
 		private EtcdElement _key;
 		private string _parentKey;
 
@@ -53,10 +55,21 @@ namespace etcdMobile.iPhone
 		{
 			base.ViewDidLoad ();
 
+			_prefs = Globals.Preferences;
+
 			foreach (var txt in new[] { txtKey, txtTTL, txtValue })
 			{
 				txt.ResignFirstResponder();
 				txt.ShouldReturn = DoReturn;
+			}
+
+			if (_prefs.ReadOnly)
+			{
+				lblReadOnly.Hidden = false;
+			}
+			else
+			{
+				lblReadOnly.Hidden = true;
 			}
 
 			txtTTL.Text = string.Empty;
@@ -69,6 +82,32 @@ namespace etcdMobile.iPhone
 				Title = _key.KeyName;
 				txtKey.Text = _key.Key;
 				txtValue.Text = _key.Value;
+
+				if (_prefs.UseSmartValues && !string.IsNullOrWhiteSpace(txtValue.Text))
+				{
+
+					// Set things up no matter what
+					swtBoolVal.On = BoolValueParser.OnValues.Contains (txtValue.Text);
+					swtBoolVal.ValueChanged += (sender, e) => 
+					{
+						var originalList = swtBoolVal.On ? BoolValueParser.OffValues : BoolValueParser.OnValues;
+						var newList = swtBoolVal.On ? BoolValueParser.OnValues : BoolValueParser.OffValues;
+						var originalIndex = originalList.IndexOf(txtValue.Text);
+
+						if(originalIndex > -1)
+						{
+							var newValue = newList[originalIndex];
+							txtValue.Text = newValue;
+						}
+					};
+				
+					txtValue.AllTouchEvents += (sender, e) => 
+					{
+						ToggleSmartValueControls();
+					}; 
+
+					ToggleSmartValueControls ();
+				}
 
 				if (_key.Ttl.HasValue)
 				{
@@ -90,38 +129,51 @@ namespace etcdMobile.iPhone
 				txtTTL.Text = "";
 			}
 
-			btnSave.Clicked += (sender, e) => 
+			if (_prefs.ReadOnly == false)
 			{
-				var newKey = new EtcdElement();
-				newKey.Key = txtKey.Text;
-				if(!newKey.Key.StartsWith("/"))
+				btnSave.Clicked += (sender, e) =>
 				{
-					newKey.Key = "/" + newKey.Key;
-				}
+					var newKey = new EtcdElement ();
+					newKey.Key = txtKey.Text;
+					if (!newKey.Key.StartsWith ("/"))
+					{
+						newKey.Key = "/" + newKey.Key;
+					}
 
-				newKey.Value = txtValue.Text;
+					newKey.Value = txtValue.Text;
 
-				if(!string.IsNullOrWhiteSpace(txtTTL.Text))
-				{
-					int ttl;
-					int.TryParse(txtTTL.Text, out ttl);
-					newKey.Ttl = ttl;
-				}
+					if (!string.IsNullOrWhiteSpace (txtTTL.Text))
+					{
+						int ttl;
+						int.TryParse (txtTTL.Text, out ttl);
+						newKey.Ttl = ttl;
+					}
 
-				_server.Client.SaveKey(newKey);
+					_server.Client.SaveKey (newKey);
 
-				if(_key != null && _key.Key != txtKey.Text)
-				{
-					_server.Client.DeleteKey(_key);
-				}
+					if (_key != null && _key.Key != txtKey.Text)
+					{
+						_server.Client.DeleteKey (_key);
+					}
 
-				if(OnSave != null)
-				{
-					OnSave(this, null);
-				}
+					if (OnSave != null)
+					{
+						OnSave (this, null);
+					}
 
-				NavigationController.PopViewControllerAnimated(true);
-			};
+					NavigationController.PopViewControllerAnimated (true);
+				};
+			}
+			else
+			{
+				btnSave.Enabled = false;
+				btnDelete.Enabled = false;
+			}
+		}
+
+		private void ToggleSmartValueControls()
+		{
+			swtBoolVal.Hidden = BoolValueParser.OnValues.Union (BoolValueParser.OffValues).Contains (txtValue.Text) == false;
 		}
 
 		private void SetDatesFromUtcDate(DateTime utc)

@@ -14,8 +14,8 @@ namespace etcdMobile.iPhone
 		private Server _server;
 		private EtcdElement _parentKey;
 		private KeySource _source;
-		private SqlCache _sqlCache;
 		private SortType _sort;
+		private Preferences _prefs;
 		
 		public KeyList (Server server) : base ("KeyList", null)
 		{
@@ -29,7 +29,10 @@ namespace etcdMobile.iPhone
 
 		public override void ViewWillAppear (bool animated)
 		{
-//			Refresh ();
+			if (_prefs.RefreshOnSave)
+			{
+				Refresh ();
+			}
 
 			base.ViewWillAppear (animated);
 			NavigationController.NavigationBarHidden = false;
@@ -68,51 +71,43 @@ namespace etcdMobile.iPhone
 
 			Title = _parentKey == null ? _server.Name : _parentKey.KeyName;
 
-			_sqlCache = new SqlCache();
+			_prefs = Globals.Preferences;
 
-			var btnAdd = new UIBarButtonItem(UIBarButtonSystemItem.Add);
-			btnAdd.Clicked += (sender, e) => 
+			if (_prefs.ReadOnly == false)
 			{
-				var keyAdd = new KeyAdd(_server, _parentKey != null ? _parentKey.Key : "/");
-				keyAdd.OnSave += Refresh;
-				NavigationController.PushViewController(keyAdd, true);
-			};
+				var btnAdd = new UIBarButtonItem (UIBarButtonSystemItem.Add);
+				btnAdd.Clicked += (sender, e) =>
+				{
+					var keyAdd = new KeyAdd (_server, _parentKey != null ? _parentKey.Key : "/");
+					keyAdd.OnSave += Refresh;
+					NavigationController.PushViewController (keyAdd, true);
+				};
 		
-			NavigationItem.RightBarButtonItems = new[] { btnAdd }.ToArray();
+				NavigationItem.RightBarButtonItems = new[] { btnAdd }.ToArray ();
+			}
 
 			table.BackgroundColor = UIColor.Clear;
 			table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 
-			_source = new KeySource(NavigationController, _server, _parentKey, _sqlCache, new ReloadableTableWrapper(table));
+			_source = new KeySource(NavigationController, _server, _parentKey, new ReloadableTableWrapper(table));
 			_source.ItemDeleted += Refresh;
 
 			SetStats ();
-			
-			var prompt = new UIAlertView("", "Sort by..", null, "Name Ascending", "TTL Ascending", "TTL Descending", "Name Descending");
-			prompt.Clicked += (sender, e) => 
-			{
-				switch(e.ButtonIndex)
-				{
-					case 0:
-						_sort = SortType.NameAsc;
-						break;
-					case 1:
-						_sort = SortType.TtlAsc;
-						break;
-					case 2:
-						_sort = SortType.TtlDesc;
-						break;
-					case 3:
-						_sort = SortType.NameDesc;
-						break;
-				}
-
-				Refresh();
-			};
 
 			btnSort.Clicked += (sender, e) => 
 			{
-				prompt.Show();
+				if(_sort == SortType.NameAsc)
+				{
+					btnSort.Image = UIImage.FromBundle("alphabetical_sorting_za-25.png");;
+					_sort = SortType.NameDesc;
+				}
+				else 
+				{
+					btnSort.Image = UIImage.FromBundle("alphabetical_sorting_az-25.png");
+					_sort = SortType.NameAsc;
+				}
+
+				Refresh();
 			};
 
 			var refresh = new UIRefreshControl();

@@ -53,6 +53,13 @@ namespace etcdMobile.iPhone
 
 				PopulatePreferences();
 			};
+
+			var alert = new UIAlertView ("Smart Values", "Smart Values use the value of a given key to display a user-friendly control.  For example, a key value of 'true' will enable a Switch so you can toggle the key's value between 'true' and 'false'.  You will still be able to edit the value directly as a string.", null, "OK");
+
+			btnSmartValHelp.TouchUpInside += (sender, e) => 
+			{
+				alert.Show();
+			};
 		}
 
 		private void SavePreferences()
@@ -71,6 +78,8 @@ namespace etcdMobile.iPhone
 			swtHideEtcdDir.On = _prefs.HideEtcdDir;
 			swtRefresh.On = _prefs.RefreshOnSave;
 			swtSmartVal.On = _prefs.UseSmartValues;
+
+			SetReadOnlyStates ();
 		}
 
 		private void SetReadOnlyStates()
@@ -78,16 +87,11 @@ namespace etcdMobile.iPhone
 			if(swtReadOnly.On)
 			{
 				swtSmartVal.On = false;
-				swtRefresh.On = false;
 				swtSmartVal.Enabled = false;
-				swtRefresh.Enabled = false;
 			}
 			else
 			{
-				//					swtSmartVal.On = true;
-				//					swtRefresh.On = true;
 				swtSmartVal.Enabled = true;
-				swtRefresh.Enabled = true;
 			}
 		}
 	}

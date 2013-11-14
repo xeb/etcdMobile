@@ -152,6 +152,7 @@
     <Compile Include="Common\Preferences.cs" />
     <Compile Include="Common\Globals.cs" />
     <Compile Include="Common\ISqlCache.cs" />
+    <Compile Include="Common\BoolValueParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -171,9 +172,10 @@
     <BundleResource Include="Resources\background.png" />
     <BundleResource Include="Images\check.png" />
     <BundleResource Include="Images\xmark.png" />
-    <BundleResource Include="Resources\generic_sorting2-128.png" />
     <BundleResource Include="Resources\settings-25.png" />
     <BundleResource Include="Resources\help_filled-25.png" />
+    <BundleResource Include="Resources\alphabetical_sorting_az-25.png" />
+    <BundleResource Include="Resources\alphabetical_sorting_za-25.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Server\ServerAdd.xib" />
