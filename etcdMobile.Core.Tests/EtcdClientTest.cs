@@ -79,6 +79,22 @@ namespace etcdMobile.Core.Tests
 
 			Assert.IsNull (targetKey);
 		}
+	
+		[Test]
+		public void MarkReadOnlyServerSideWorks()
+		{
+			var baseUrl = "http://127.0.0.1:4001";
+			var etcdClient = new EtcdClient(baseUrl);
+		
+
+			var newElement = new EtcdElement { Key = EtcdClient.READ_ONLY, Value = "1", Ttl = 30 };
+			etcdClient.SaveKey (newElement);
+
+			var keys = etcdClient.GetKeys ();
+			var targetKey = keys.FirstOrDefault ();
+
+			Assert.IsTrue(targetKey.IsReadOnly);
+		}
 
 		[Test]
 		public void DeserializeDateTime()

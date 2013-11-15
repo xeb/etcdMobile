@@ -19,7 +19,7 @@ namespace etcdMobile.iPhone
 		MonoTouch.UIKit.UIBarButtonItem btnSave { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UIButton btnSmartValHelp { get; set; }
+		MonoTouch.UIKit.UILabel lblWarning { get; set; }
 
 		[Outlet]
 		MonoTouch.UIKit.UISwitch swtHideEtcdDir { get; set; }
@@ -29,12 +29,14 @@ namespace etcdMobile.iPhone
 
 		[Outlet]
 		MonoTouch.UIKit.UISwitch swtRefresh { get; set; }
-
-		[Outlet]
-		MonoTouch.UIKit.UISwitch swtSmartVal { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (btnReset != null) {
+				btnReset.Dispose ();
+				btnReset = null;
+			}
+
 			if (btnSave != null) {
 				btnSave.Dispose ();
 				btnSave = null;
@@ -45,29 +47,19 @@ namespace etcdMobile.iPhone
 				swtHideEtcdDir = null;
 			}
 
-			if (swtRefresh != null) {
-				swtRefresh.Dispose ();
-				swtRefresh = null;
-			}
-
-			if (swtSmartVal != null) {
-				swtSmartVal.Dispose ();
-				swtSmartVal = null;
-			}
-
-			if (btnSmartValHelp != null) {
-				btnSmartValHelp.Dispose ();
-				btnSmartValHelp = null;
-			}
-
 			if (swtReadOnly != null) {
 				swtReadOnly.Dispose ();
 				swtReadOnly = null;
 			}
 
-			if (btnReset != null) {
-				btnReset.Dispose ();
-				btnReset = null;
+			if (swtRefresh != null) {
+				swtRefresh.Dispose ();
+				swtRefresh = null;
+			}
+
+			if (lblWarning != null) {
+				lblWarning.Dispose ();
+				lblWarning = null;
 			}
 		}
 	}

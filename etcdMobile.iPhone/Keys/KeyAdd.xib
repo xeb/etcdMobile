@@ -12,7 +12,7 @@
                 <outlet property="lblDateUtc" destination="x8Z-tY-ubs" id="lJx-mH-lTG"/>
                 <outlet property="lblIndex" destination="O8C-gt-DCs" id="P21-Gv-2uw"/>
                 <outlet property="lblReadOnly" destination="gW8-Zz-qpg" id="FPB-Op-ioB"/>
-                <outlet property="swtBoolVal" destination="Q0W-Hb-umz" id="Dj1-V4-zNc"/>
+                <outlet property="lblRelative" destination="nVm-la-FZ3" id="PIN-hh-LXo"/>
                 <outlet property="txtKey" destination="5xv-GD-CqC" id="qQm-GV-ZYf"/>
                 <outlet property="txtTTL" destination="fLn-iF-fff" id="1wA-vu-7R4"/>
                 <outlet property="txtValue" destination="m3f-Js-Fl0" id="Ega-vU-Cg9"/>
@@ -40,13 +40,19 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2013-01-02 23:27 UTC" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x8Z-tY-ubs">
-                    <rect key="frame" x="65" y="256" width="235" height="24"/>
+                    <rect key="frame" x="65" y="237" width="235" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In an hour" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nVm-la-FZ3">
+                    <rect key="frame" x="65" y="205" width="235" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2013-01-02 11:27 PM Local" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HUU-jT-6b3">
-                    <rect key="frame" x="65" y="291" width="235" height="24"/>
+                    <rect key="frame" x="65" y="272" width="235" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="highlightedColor"/>
@@ -64,7 +70,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="263" borderStyle="roundedRect" minimumFontSize="17" id="fLn-iF-fff">
-                    <rect key="frame" x="65" y="208" width="76" height="30"/>
+                    <rect key="frame" x="65" y="161" width="76" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" keyboardType="numberPad" keyboardAppearance="alert" returnKeyType="done"/>
@@ -95,13 +101,13 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TTL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nXL-Aj-aEP">
-                    <rect key="frame" x="15" y="212" width="42" height="21"/>
+                    <rect key="frame" x="15" y="165" width="42" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="secs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GWi-YC-GJ3">
-                    <rect key="frame" x="149" y="212" width="52" height="21"/>
+                    <rect key="frame" x="149" y="165" width="52" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <nil key="highlightedColor"/>
@@ -113,10 +119,6 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="Q0W-Hb-umz">
-                    <rect key="frame" x="65" y="161" width="51" height="31"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </switch>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

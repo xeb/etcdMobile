@@ -13,6 +13,8 @@ namespace etcdMobile.Core
 	{
 		private string _baseUrl;
 		private const string _apiRoot = "v1/keys";
+		public static readonly string READ_ONLY = "_etcd.mobile.readonly";
+
 		public EtcdClient (string baseUrl)
 		{
 			_baseUrl = ModifyBaseUrl(baseUrl);
@@ -40,12 +42,13 @@ namespace etcdMobile.Core
 				return false;
 			}
 		}
-		
-		public List<EtcdElement> GetKeys(string parent = "")
+
+		public List<EtcdElement> GetKeys(EtcdElement parent = null)
 		{
-			var url = _baseUrl + _apiRoot + parent;
+			var url = _baseUrl + _apiRoot + (parent == null ? "" : parent.Key);
 			var result = HttpGet(url);
-			return JsonConvert.DeserializeObject<List<EtcdElement>>(result);
+			var keys = JsonConvert.DeserializeObject<List<EtcdElement>>(result);
+			return keys;
 		}
 		
 		public List<EtcdElement> GetChildKeys(EtcdElement ele)
@@ -53,7 +56,7 @@ namespace etcdMobile.Core
 			if(ele == null) throw new ArgumentNullException("ele is NULL");
 			if(ele.Dir == false) throw new ArgumentException("ele is not a Directory");
 			
-			return GetKeys(ele.Key);
+			return GetKeys(ele);
 		}
 
 		public void SaveKey(EtcdElement key)

@@ -83,32 +83,6 @@ namespace etcdMobile.iPhone
 				txtKey.Text = _key.Key;
 				txtValue.Text = _key.Value;
 
-				if (_prefs.UseSmartValues && !string.IsNullOrWhiteSpace(txtValue.Text))
-				{
-
-					// Set things up no matter what
-					swtBoolVal.On = BoolValueParser.OnValues.Contains (txtValue.Text);
-					swtBoolVal.ValueChanged += (sender, e) => 
-					{
-						var originalList = swtBoolVal.On ? BoolValueParser.OffValues : BoolValueParser.OnValues;
-						var newList = swtBoolVal.On ? BoolValueParser.OnValues : BoolValueParser.OffValues;
-						var originalIndex = originalList.IndexOf(txtValue.Text);
-
-						if(originalIndex > -1)
-						{
-							var newValue = newList[originalIndex];
-							txtValue.Text = newValue;
-						}
-					};
-				
-					txtValue.AllTouchEvents += (sender, e) => 
-					{
-						ToggleSmartValueControls();
-					}; 
-
-					ToggleSmartValueControls ();
-				}
-
 				if (_key.Ttl.HasValue)
 				{
 					txtTTL.Text = _key.Ttl.Value.ToString();
@@ -170,11 +144,11 @@ namespace etcdMobile.iPhone
 				btnDelete.Enabled = false;
 			}
 		}
-
-		private void ToggleSmartValueControls()
-		{
-			swtBoolVal.Hidden = BoolValueParser.OnValues.Union (BoolValueParser.OffValues).Contains (txtValue.Text) == false;
-		}
+//
+//		private void ToggleSmartValueControls()
+//		{
+//			swtBoolVal.Hidden = BoolValueParser.OnValues.Union (BoolValueParser.OffValues).Contains (txtValue.Text) == false;
+//		}
 
 		private void SetDatesFromUtcDate(DateTime utc)
 		{	

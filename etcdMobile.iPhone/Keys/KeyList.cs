@@ -42,14 +42,8 @@ namespace etcdMobile.iPhone
 		{
 			_source.Refresh (_sort);
 
-			if (_source.Count == 0)
-			{
-				// Shouldn't happen, go to ValueEdit  ?
-			}
-			else
-			{
-				SetStats ();
-			}
+			SetStats ();
+			SetReadOnly ();
 		}
 
 		public void Refresh(object sender, EventArgs e)
@@ -73,24 +67,13 @@ namespace etcdMobile.iPhone
 
 			_prefs = Globals.Preferences;
 
-			if (_prefs.ReadOnly == false)
-			{
-				var btnAdd = new UIBarButtonItem (UIBarButtonSystemItem.Add);
-				btnAdd.Clicked += (sender, e) =>
-				{
-					var keyAdd = new KeyAdd (_server, _parentKey != null ? _parentKey.Key : "/");
-					keyAdd.OnSave += Refresh;
-					NavigationController.PushViewController (keyAdd, true);
-				};
-		
-				NavigationItem.RightBarButtonItems = new[] { btnAdd }.ToArray ();
-			}
-
 			table.BackgroundColor = UIColor.Clear;
 			table.SeparatorStyle = UITableViewCellSeparatorStyle.None;
 
 			_source = new KeySource(NavigationController, _server, _parentKey, new ReloadableTableWrapper(table));
 			_source.ItemDeleted += Refresh;
+
+
 
 			SetStats ();
 
@@ -125,6 +108,33 @@ namespace etcdMobile.iPhone
 			lblIndex.Text = _source.Keys.First ().Index.ToString();
 			lblKeys.Text = _source.Keys.Count.ToString();
 			lblDirs.Text = _source.Keys.Count (k => k.Dir).ToString();
+		}
+
+		private void SetReadOnly()
+		{
+			var readOnly = _prefs.ReadOnly;
+
+			if ((_parentKey != null && _parentKey.IsReadOnly) || _source.Keys.Any (k => k.IsReadOnly))
+			{
+				readOnly = true;
+			}
+
+			if (readOnly == false)
+			{
+				var btnAdd = new UIBarButtonItem (UIBarButtonSystemItem.Add);
+				btnAdd.Clicked += (sender, e) =>
+				{
+					var keyAdd = new KeyAdd (_server, _parentKey != null ? _parentKey.Key : "/");
+					keyAdd.OnSave += Refresh;
+					NavigationController.PushViewController (keyAdd, true);
+				};
+
+				NavigationItem.RightBarButtonItems = new[] { btnAdd }.ToArray ();
+			}
+			else
+			{
+				NavigationItem.RightBarButtonItems = null;
+			}
 		}
 
 		private class ReloadableTableWrapper : IReloadableTableView

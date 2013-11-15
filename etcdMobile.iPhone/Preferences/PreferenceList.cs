@@ -5,6 +5,7 @@ using etcdMobile.iPhone;
 using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using etcdMobile.Core;
 using etcdMobile.iPhone.Common;
 
 namespace etcdMobile.iPhone
@@ -33,19 +34,13 @@ namespace etcdMobile.iPhone
 
 			Title = "Preferences";
 
+			lblWarning.Text = string.Format (lblWarning.Text, EtcdClient.READ_ONLY);
+
 			PopulatePreferences ();
 
 			swtReadOnly.ValueChanged += (sender, e) => { SavePreferences(); };
 			swtHideEtcdDir.ValueChanged += (sender, e) => { SavePreferences(); };
 			swtRefresh.ValueChanged += (sender, e) => { SavePreferences(); };
-			swtSmartVal.ValueChanged += (sender, e) => { SavePreferences(); };
-
-			SetReadOnlyStates ();
-
-			swtReadOnly.ValueChanged += (object sender, EventArgs e) =>
-			{
-				SetReadOnlyStates();
-			};
 
 			btnReset.TouchUpInside += (sender, e) => 
 			{
@@ -54,12 +49,6 @@ namespace etcdMobile.iPhone
 				PopulatePreferences();
 			};
 
-			var alert = new UIAlertView ("Smart Values", "Smart Values use the value of a given key to display a user-friendly control.  For example, a key value of 'true' will enable a Switch so you can toggle the key's value between 'true' and 'false'.  You will still be able to edit the value directly as a string.", null, "OK");
-
-			btnSmartValHelp.TouchUpInside += (sender, e) => 
-			{
-				alert.Show();
-			};
 		}
 
 		private void SavePreferences()
@@ -67,7 +56,6 @@ namespace etcdMobile.iPhone
 			_prefs.ReadOnly = swtReadOnly.On;
 			_prefs.HideEtcdDir = swtHideEtcdDir.On;
 			_prefs.RefreshOnSave = swtRefresh.On;
-			_prefs.UseSmartValues = swtSmartVal.On;
 
 			_prefs.SaveToCache ();
 		}
@@ -77,22 +65,6 @@ namespace etcdMobile.iPhone
 			swtReadOnly.On = _prefs.ReadOnly;
 			swtHideEtcdDir.On = _prefs.HideEtcdDir;
 			swtRefresh.On = _prefs.RefreshOnSave;
-			swtSmartVal.On = _prefs.UseSmartValues;
-
-			SetReadOnlyStates ();
-		}
-
-		private void SetReadOnlyStates()
-		{
-			if(swtReadOnly.On)
-			{
-				swtSmartVal.On = false;
-				swtSmartVal.Enabled = false;
-			}
-			else
-			{
-				swtSmartVal.Enabled = true;
-			}
 		}
 	}
 }

@@ -31,7 +31,7 @@ namespace etcdMobile.iPhone
 		MonoTouch.UIKit.UILabel lblReadOnly { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UISwitch swtBoolVal { get; set; }
+		MonoTouch.UIKit.UILabel lblRelative { get; set; }
 
 		[Outlet]
 		MonoTouch.UIKit.UITextField txtKey { get; set; }
@@ -89,9 +89,9 @@ namespace etcdMobile.iPhone
 				txtValue = null;
 			}
 
-			if (swtBoolVal != null) {
-				swtBoolVal.Dispose ();
-				swtBoolVal = null;
+			if (lblRelative != null) {
+				lblRelative.Dispose ();
+				lblRelative = null;
 			}
 		}
 	}
