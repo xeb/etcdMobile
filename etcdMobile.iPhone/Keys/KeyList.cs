@@ -16,7 +16,7 @@ namespace etcdMobile.iPhone
 		private KeySource _source;
 		private SortType _sort;
 		private Preferences _prefs;
-		
+
 		public KeyList (Server server) : base ("KeyList", null)
 		{
 			_server = server;
@@ -32,6 +32,10 @@ namespace etcdMobile.iPhone
 			if (_prefs.RefreshOnSave)
 			{
 				Refresh ();
+			}
+			else
+			{
+				SetReadOnly ();
 			}
 
 			base.ViewWillAppear (animated);
@@ -73,8 +77,6 @@ namespace etcdMobile.iPhone
 			_source = new KeySource(NavigationController, _server, _parentKey, new ReloadableTableWrapper(table));
 			_source.ItemDeleted += Refresh;
 
-
-
 			SetStats ();
 
 			btnSort.Clicked += (sender, e) => 
@@ -101,6 +103,7 @@ namespace etcdMobile.iPhone
 			};
 
 			table.Add(refresh);
+			SetReadOnly (); 
 		}
 
 		private void SetStats()
@@ -112,14 +115,7 @@ namespace etcdMobile.iPhone
 
 		private void SetReadOnly()
 		{
-			var readOnly = _prefs.ReadOnly;
-
-			if ((_parentKey != null && _parentKey.IsReadOnly) || _source.Keys.Any (k => k.IsReadOnly))
-			{
-				readOnly = true;
-			}
-
-			if (readOnly == false)
+			if (_prefs.ReadOnly == false)
 			{
 				var btnAdd = new UIBarButtonItem (UIBarButtonSystemItem.Add);
 				btnAdd.Clicked += (sender, e) =>
@@ -133,7 +129,7 @@ namespace etcdMobile.iPhone
 			}
 			else
 			{
-				NavigationItem.RightBarButtonItems = null;
+				NavigationItem.RightBarButtonItems = new UIBarButtonItem[0];
 			}
 		}
 

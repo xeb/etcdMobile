@@ -34,7 +34,7 @@ namespace etcdMobile.iPhone
 
 			Title = "Preferences";
 
-			lblWarning.Text = string.Format (lblWarning.Text, EtcdClient.READ_ONLY);
+//			lblWarning.Text = string.Format (lblWarning.Text, EtcdElement.READ_ONLY_NAME);
 
 			PopulatePreferences ();
 

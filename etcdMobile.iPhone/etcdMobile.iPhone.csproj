@@ -107,7 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
-    <None Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />

@@ -13,7 +13,6 @@ namespace etcdMobile.Core
 	{
 		private string _baseUrl;
 		private const string _apiRoot = "v1/keys";
-		public static readonly string READ_ONLY = "_etcd.mobile.readonly";
 
 		public EtcdClient (string baseUrl)
 		{
@@ -108,7 +107,8 @@ namespace etcdMobile.Core
 				streamWriter.Write(postBody);	
 			}
 
-			return ReadResponse(request);
+			var result = ReadResponse(request);
+			return result;
 		}
 		
 		private string HttpPostFormValues(string url, Dictionary<string,string> formValues, string contentType = "application/x-www-form-urlencoded")

@@ -41,14 +41,6 @@ namespace etcdMobile.Core
 				return _expirationDate;
 			}
 		}
-
-		public bool IsReadOnly	
-		{
-			get
-			{
-				return KeyName == EtcdClient.READ_ONLY && new[] { "1", "YES", "TRUE" }.Contains (Value.ToUpper ());
-			}
-		}
 	}
 }
 

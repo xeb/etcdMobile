@@ -1,4 +1,0 @@
--) Catch Exceptions in EtcdClient access; show pop-ups
--) Delete Confirmation 
--) Delete button on edit view
--) Progress on Save

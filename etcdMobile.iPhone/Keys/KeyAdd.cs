@@ -19,6 +19,7 @@ namespace etcdMobile.iPhone
 		public KeyAdd(Server server, string parentKey) : this(server, (EtcdElement)null)
 		{
 			_parentKey = parentKey;
+
 			if (!_parentKey.EndsWith ("/"))
 			{
 				_parentKey += "/";
@@ -123,7 +124,18 @@ namespace etcdMobile.iPhone
 						newKey.Ttl = ttl;
 					}
 
-					_server.Client.SaveKey (newKey);
+//					if(newKey.Key.EndsWith("/")
+
+					try
+					{
+						_server.Client.SaveKey (newKey);
+					}
+					catch(System.Net.WebException ex)
+					{
+						var response = ex.Response as System.Net.HttpWebResponse;
+						var ui = new UIAlertView("ERROR", string.Format("There was an error saving your key. ({0}) {1}", Convert.ToString((int)response.StatusCode), response.StatusCode), null, "OK");
+						ui.Show();
+					}
 
 					if (_key != null && _key.Key != txtKey.Text)
 					{
@@ -144,11 +156,6 @@ namespace etcdMobile.iPhone
 				btnDelete.Enabled = false;
 			}
 		}
-//
-//		private void ToggleSmartValueControls()
-//		{
-//			swtBoolVal.Hidden = BoolValueParser.OnValues.Union (BoolValueParser.OffValues).Contains (txtValue.Text) == false;
-//		}
 
 		private void SetDatesFromUtcDate(DateTime utc)
 		{	
