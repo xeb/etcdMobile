@@ -124,22 +124,11 @@ namespace etcdMobile.iPhone
 						newKey.Ttl = ttl;
 					}
 
-//					if(newKey.Key.EndsWith("/")
-
-					try
-					{
-						_server.Client.SaveKey (newKey);
-					}
-					catch(System.Net.WebException ex)
-					{
-						var response = ex.Response as System.Net.HttpWebResponse;
-						var ui = new UIAlertView("ERROR", string.Format("There was an error saving your key. ({0}) {1}", Convert.ToString((int)response.StatusCode), response.StatusCode), null, "OK");
-						ui.Show();
-					}
+					UIHelper.Try(() => _server.Client.SaveKey (newKey));
 
 					if (_key != null && _key.Key != txtKey.Text)
 					{
-						_server.Client.DeleteKey (_key);
+						UIHelper.Try(() => _server.Client.DeleteKey (_key));
 					}
 
 					if (OnSave != null)
@@ -149,6 +138,15 @@ namespace etcdMobile.iPhone
 
 					NavigationController.PopViewControllerAnimated (true);
 				};
+
+				if (_key != null)
+				{
+					btnDelete.Clicked += (sender, e) =>
+					{
+						UIHelper.Try (() => _server.Client.DeleteKey (_key));
+						NavigationController.PopViewControllerAnimated (true);
+					};
+				}	
 			}
 			else
 			{

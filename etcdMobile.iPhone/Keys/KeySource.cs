@@ -89,6 +89,8 @@ namespace etcdMobile.iPhone.Keys
 			{
 				var key = _keys[indexPath.Row];
 
+				UIHelper.Try(() => _server.Client.DeleteKey (key));
+				
 				Refresh(); 
 
 				if (ItemDeleted != null)

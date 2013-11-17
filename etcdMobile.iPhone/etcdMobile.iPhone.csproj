@@ -152,6 +152,7 @@
     <Compile Include="Common\Globals.cs" />
     <Compile Include="Common\ISqlCache.cs" />
     <Compile Include="Common\BoolValueParser.cs" />
+    <Compile Include="Common\UIHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
