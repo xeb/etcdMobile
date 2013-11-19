@@ -15,6 +15,7 @@ namespace etcdMobile.iPhone
 		private Preferences _prefs;
 		private EtcdElement _key;
 		private string _parentKey;
+		private UIButton _doneButton;
 
 		public KeyAdd(Server server, string parentKey) : this(server, (EtcdElement)null)
 		{
@@ -48,7 +49,7 @@ namespace etcdMobile.iPhone
 
 		bool DoReturn (UITextField tf)
 		{
-			tf.ResignFirstResponder ();
+			View.EndEditing (true);
 			return true;
 		}
 
@@ -58,9 +59,22 @@ namespace etcdMobile.iPhone
 
 			_prefs = Globals.Preferences;
 
-			foreach (var txt in new[] { txtKey, txtTTL, txtValue })
+			NSNotificationCenter.DefaultCenter.AddObserver ("UIKeyboardWillHideNotification", KeyboardHide);
+			NSNotificationCenter.DefaultCenter.AddObserver ("UIKeyboardWillShowNotification", KeyboardShow);
+
+			_doneButton = new UIButton (UIButtonType.Custom);
+			_doneButton.Frame = new RectangleF (0, 163, 106, 53);
+			_doneButton.SetTitle ("DONE", UIControlState.Normal);
+			_doneButton.SetTitleColor (UIColor.White, UIControlState.Normal);
+			_doneButton.SetTitleColor (UIColor.LightGray, UIControlState.Highlighted);
+
+			_doneButton.TouchUpInside += (sender, e) => 
 			{
-				txt.ResignFirstResponder();
+				DoReturn(null);
+			};
+
+			foreach (var txt in new[] { txtKey, txtValue })
+			{
 				txt.ShouldReturn = DoReturn;
 			}
 
@@ -153,6 +167,22 @@ namespace etcdMobile.iPhone
 				btnSave.Enabled = false;
 				btnDelete.Enabled = false;
 			}
+		}
+
+		public void KeyboardShow(NSNotification notification)
+		{
+			var keyboard = txtTTL.WeakInputDelegate as UIView;
+
+			if (keyboard != null)
+			{
+				_doneButton.Hidden = false;
+				keyboard.AddSubview (_doneButton);
+			}
+		}
+
+		public void KeyboardHide(NSNotification notification)
+		{
+			_doneButton.Hidden = true;
 		}
 
 		private void SetDatesFromUtcDate(DateTime utc)
