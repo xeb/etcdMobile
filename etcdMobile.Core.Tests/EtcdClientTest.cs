@@ -7,7 +7,7 @@ using Newtonsoft.Json.Converters;
 
 namespace etcdMobile.Core.Tests
 {
-	[TestFixture()]
+	[TestFixture]
 	public class EtcdClientTests
 	{
 		[Test()]
@@ -79,22 +79,8 @@ namespace etcdMobile.Core.Tests
 
 			Assert.IsNull (targetKey);
 		}
-	
-		[Test]
-		public void MarkReadOnlyServerSideWorks()
-		{
-			var baseUrl = "http://127.0.0.1:4001";
-			var etcdClient = new EtcdClient(baseUrl);
-		
 
-			var newElement = new EtcdElement { Key = EtcdClient.READ_ONLY, Value = "1", Ttl = 30 };
-			etcdClient.SaveKey (newElement);
-
-			var keys = etcdClient.GetKeys ();
-			var targetKey = keys.FirstOrDefault ();
-
-			Assert.IsTrue(targetKey.IsReadOnly);
-		}
+		// SWITCH THESE TESTS
 
 		[Test]
 		public void DeserializeDateTime()
@@ -112,6 +98,24 @@ namespace etcdMobile.Core.Tests
 			Assert.AreEqual (date.Minute, 17);
 			Assert.AreEqual (date.Second, 35);
 			Assert.AreEqual (date.ToUniversalTime ().Hour, 6);
+		}
+
+		[Test]
+		public void DeserializeDateTime2()
+		{
+			var key = new EtcdElement ();
+			key.Expiration = "2013-12-07T19:22:01.99251035-05:00";
+
+			Assert.IsTrue (key.ExpirationDate.HasValue);
+
+			var date = key.ExpirationDate.Value;
+			Assert.AreEqual (date.Year, 2013);
+			Assert.AreEqual (date.Month, 12);
+			Assert.AreEqual (date.Day, 7);
+			Assert.AreEqual (date.Hour, 16);
+			Assert.AreEqual (date.Minute, 22);
+			Assert.AreEqual (date.Second, 01);
+			Assert.AreEqual (date.ToUniversalTime ().Hour, 0);
 		}
 	}
 }

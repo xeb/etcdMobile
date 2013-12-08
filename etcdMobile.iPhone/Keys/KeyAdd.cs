@@ -15,7 +15,6 @@ namespace etcdMobile.iPhone
 		private Preferences _prefs;
 		private EtcdElement _key;
 		private string _parentKey;
-		private UIButton _doneButton;
 
 		public KeyAdd(Server server, string parentKey) : this(server, (EtcdElement)null)
 		{
@@ -57,21 +56,24 @@ namespace etcdMobile.iPhone
 		{
 			base.ViewDidLoad ();
 
+
+			NSNotificationCenter.DefaultCenter.AddObserver ("UITextFieldTextDidEndEditingNotification", EditingEnded);
+
 			_prefs = Globals.Preferences;
 
-			NSNotificationCenter.DefaultCenter.AddObserver ("UIKeyboardWillHideNotification", KeyboardHide);
-			NSNotificationCenter.DefaultCenter.AddObserver ("UIKeyboardWillShowNotification", KeyboardShow);
+			var toolbar = new UIToolbar (new RectangleF(0.0f, 0.0f, this.View.Frame.Size.Width, 44.0f));
+			toolbar.TintColor = UIColor.White;
+			toolbar.BarStyle = UIBarStyle.Black;
+			toolbar.Translucent = true;
 
-			_doneButton = new UIButton (UIButtonType.Custom);
-			_doneButton.Frame = new RectangleF (0, 163, 106, 53);
-			_doneButton.SetTitle ("DONE", UIControlState.Normal);
-			_doneButton.SetTitleColor (UIColor.White, UIControlState.Normal);
-			_doneButton.SetTitleColor (UIColor.LightGray, UIControlState.Highlighted);
-
-			_doneButton.TouchUpInside += (sender, e) => 
-			{
-				DoReturn(null);
+			toolbar.Items = new UIBarButtonItem[]{
+				new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
+				new UIBarButtonItem(UIBarButtonSystemItem.Done, delegate {
+					DoReturn(txtTTL);
+				})
 			};
+
+			txtTTL.InputAccessoryView = toolbar;
 
 			foreach (var txt in new[] { txtKey, txtValue })
 			{
@@ -88,9 +90,9 @@ namespace etcdMobile.iPhone
 			}
 
 			txtTTL.Text = string.Empty;
-
 			lblDateUtc.Hidden = true;
 			lblDateLocal.Hidden = true;
+			lblRelative.Hidden = true;
 
 			if (_key != null)
 			{
@@ -102,11 +104,7 @@ namespace etcdMobile.iPhone
 				{
 					txtTTL.Text = _key.Ttl.Value.ToString();
 
-					if(_key.ExpirationDate.HasValue)
-					{
-						var utc = _key.ExpirationDate.Value.ToUniversalTime ();
-						SetDatesFromUtcDate (utc);
-					}
+					SetDates (_key);
 				}
 
 				lblIndex.Text = _key.Index.ToString();
@@ -169,20 +167,24 @@ namespace etcdMobile.iPhone
 			}
 		}
 
-		public void KeyboardShow(NSNotification notification)
+		private void EditingEnded(NSNotification notification)
 		{
-			var keyboard = txtTTL.WeakInputDelegate as UIView;
+			_key.SetTtl (txtTTL.Text);
 
-			if (keyboard != null)
-			{
-				_doneButton.Hidden = false;
-				keyboard.AddSubview (_doneButton);
-			}
+			SetDates (_key);
 		}
 
-		public void KeyboardHide(NSNotification notification)
+		private void SetDates(EtcdElement e)
 		{
-			_doneButton.Hidden = true;
+			if (e == null)
+				return;
+
+			if(e.ExpirationDate.HasValue)
+			{
+				SetDatesFromUtcDate (e.ExpirationDate.Value.ToUniversalTime ());
+				lblRelative.Text = e.ExpirationFriendly;
+				lblRelative.Hidden = false;
+			}
 		}
 
 		private void SetDatesFromUtcDate(DateTime utc)
@@ -190,7 +192,7 @@ namespace etcdMobile.iPhone
 			lblDateUtc.Hidden = false;
 			lblDateLocal.Hidden = false;
 			lblDateUtc.Text = utc.ToString ("yyyy-MM-dd HH:mm:ss") + " UTC";
-			lblDateLocal.Text = utc.ToLocalTime ().ToString ("yyyy-M-d hh:mm:sstt") + " Local";
+			lblDateLocal.Text = utc.ToLocalTime ().ToString ("yyyy-MM-dd hh:mm:sstt") + " Local";
 		}
 	}
 }
