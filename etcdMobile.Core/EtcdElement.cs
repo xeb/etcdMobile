@@ -23,7 +23,7 @@ namespace etcdMobile.Core
 		public int Index {get;set;}
 		public bool Dir {get;set;}
 		public string Expiration {get;set;}
-		public int? Ttl {get;set;}
+		public ulong? Ttl {get;set;}
 
 		private DateTime? _expirationDate;
 		public DateTime? ExpirationDate
@@ -42,72 +42,61 @@ namespace etcdMobile.Core
 			}
 		}
 
-		public void SetTtl(string ttlValue)
+		public static string GetFriendlyTtl(ulong? ttl)
 		{
-			if (!string.IsNullOrWhiteSpace (ttlValue))
-			{
-				int ttl;
-				if (int.TryParse (ttlValue, out ttl))
-					SetTtl (ttl);
-			}
-		}
+			if (ttl.HasValue == false)
+				return string.Empty;
 
-		public void SetTtl(int ttl)
-		{
-			Ttl = ttl;
-			_expirationDate = DateTime.Now.AddSeconds (ttl);
+			if (ttl.Value < 10)
+				return "In a few seconds";
+
+			if (ttl.Value < 60)
+				return "In less than a minute";
+
+			if (ttl.Value < 60 * 3)
+				return "In a few minutes";
+
+			if (ttl.Value < 60 * 57)
+				return "In " + (ttl.Value / (60)) + " minutes";
+
+			if (ttl.Value < 60 * 64)
+				return "In an hour";
+
+			if (ttl.Value < 60 * 60 * 3)
+				return "In a few hours";
+
+			if (ttl.Value < 60 * 60 * 23)
+				return "In " + (ttl.Value / (60 * 60)) + " hours";
+
+			if (ttl.Value < 60 * 60 * 25)
+				return "In a day";
+
+			if (ttl.Value < 60 * 60 * 24 * 4)
+				return "In a few days";
+
+			if (ttl.Value < 60 * 60 * 160)
+				return "In " + (ttl.Value / (60*60*24)) + " days";
+
+			if (ttl.Value < 60 * 60 * 24 * 7)
+				return "In a week";
+
+			if (ttl.Value < 60 * 60 * 24 * 7 * 3)
+				return "In a few weeks";
+
+			if (ttl.Value < 60 * 60 * 24 * 7 * 5)
+				return "In a month";
+
+			if (ttl.Value < 365 * 24 * 60 * 60)
+				return "Less than a year";
+
+			return "A long time from now";
 		}
 
 		public string ExpirationFriendly
 		{
 			get
 			{
-				if (Ttl.HasValue == false)
-					return string.Empty;
-
-				if (Ttl.Value < 10)
-					return "In a few seconds";
-
-				if (Ttl.Value < 60)
-					return "In less than a minute";
-
-				if (Ttl.Value < 60 * 3)
-					return "In a few minutes";
-
-				if (Ttl.Value < 60 * 57)
-					return "In " + (Ttl.Value / (60)) + " minutes";
-
-				if (Ttl.Value < 60 * 64)
-					return "In an hour";
-
-				if (Ttl.Value < 60 * 60 * 3)
-					return "In a few hours";
-
-				if (Ttl.Value < 60 * 60 * 23)
-					return "In " + (Ttl.Value / (60 * 60)) + " hours";
-
-				if (Ttl.Value < 60 * 60 * 25)
-					return "In a day";
-
-				if (Ttl.Value < 60 * 60 * 24 * 4)
-					return "In a few days";
-
-				if (Ttl.Value < 60 * 60 * 160)
-					return "In " + (Ttl.Value / (60*60*24)) + " days";
-
-				if (Ttl.Value < 60 * 60 * 24 * 7)
-					return "In a week";
-
-				if (Ttl.Value < 60 * 60 * 24 * 7 * 3)
-					return "In a few weeks";
-
-				if (Ttl.Value < 60 * 60 * 24 * 7 * 5)
-					return "In a month";
-
-				if (Ttl.Value < 365 * 24 * 60 * 60)
-					return "Less than a year";
-
-				return "A long time from now";
+				return GetFriendlyTtl (Ttl);
 			}
 		}
 	}

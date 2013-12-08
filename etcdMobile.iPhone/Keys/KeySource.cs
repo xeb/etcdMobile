@@ -63,10 +63,10 @@ namespace etcdMobile.iPhone.Keys
 					_keys = _keys.OrderByDescending (k => k.Key).ToList ();
 					break;
 				case SortType.TtlAsc:
-					_keys = _keys.OrderBy (k => k.Ttl.HasValue ? k.Ttl.Value : -1).ToList ();
+				_keys = _keys.OrderBy (k => k.Ttl.HasValue ? k.Ttl.Value : 0).ToList ();
 					break;
 				case SortType.TtlDesc:
-					_keys = _keys.OrderByDescending (k => k.Ttl.HasValue ? k.Ttl.Value : -1).ToList ();
+				_keys = _keys.OrderByDescending (k => k.Ttl.HasValue ? k.Ttl.Value : 0).ToList ();
 					break;
 			}
 

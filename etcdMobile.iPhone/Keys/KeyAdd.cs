@@ -104,7 +104,7 @@ namespace etcdMobile.iPhone
 				{
 					txtTTL.Text = _key.Ttl.Value.ToString();
 
-					SetDates (_key);
+					SetDates (_key.Ttl);
 				}
 
 				lblIndex.Text = _key.Index.ToString();
@@ -131,9 +131,9 @@ namespace etcdMobile.iPhone
 
 					if (!string.IsNullOrWhiteSpace (txtTTL.Text))
 					{
-						int ttl;
-						int.TryParse (txtTTL.Text, out ttl);
-						newKey.Ttl = ttl;
+						ulong ttl;
+						if(ulong.TryParse (txtTTL.Text, out ttl));
+							newKey.Ttl = ttl;
 					}
 
 					UIHelper.Try(() => _server.Client.SaveKey (newKey));
@@ -167,22 +167,42 @@ namespace etcdMobile.iPhone
 			}
 		}
 
-		private void EditingEnded(NSNotification notification)
+		/*
+		 * 
+		public void SetTtl(string ttlValue)
 		{
-			_key.SetTtl (txtTTL.Text);
-
-			SetDates (_key);
+			if (!string.IsNullOrWhiteSpace (ttlValue))
+			{
+				int ttl;
+				if (int.TryParse (ttlValue, out ttl))
+					SetTtl (ttl);
+			}
 		}
 
-		private void SetDates(EtcdElement e)
+		public void SetTtl(int ttl)
 		{
-			if (e == null)
-				return;
+			Ttl = ttl;
+			_expirationDate = DateTime.Now.AddSeconds (ttl);
+		}
+		*/
 
-			if(e.ExpirationDate.HasValue)
+		private void EditingEnded(NSNotification notification)
+		{
+			if (!string.IsNullOrWhiteSpace(txtTTL.Text))
 			{
-				SetDatesFromUtcDate (e.ExpirationDate.Value.ToUniversalTime ());
-				lblRelative.Text = e.ExpirationFriendly;
+				ulong ttl;
+				if(ulong.TryParse(txtTTL.Text, out ttl))
+					SetDates (ttl);
+			}
+		}
+
+		private void SetDates(ulong? ttl)
+		{
+			if(ttl.HasValue && ttl.Value > 0)
+			{
+				var expiration = DateTime.UtcNow.AddSeconds (ttl.Value);
+				SetDatesFromUtcDate (expiration);
+				lblRelative.Text = EtcdElement.GetFriendlyTtl(ttl);
 				lblRelative.Hidden = false;
 			}
 		}

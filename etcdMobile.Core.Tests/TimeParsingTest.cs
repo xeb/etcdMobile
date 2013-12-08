@@ -169,7 +169,7 @@ namespace etcdMobile.Core.Tests
 		public void SetTtlForSeconds()
 		{
 			var e = new EtcdElement ();
-			e.SetTtl (60 * 60);
+			e.Ttl = 60 * 60;
 			Assert.AreEqual ("In an hour", e.ExpirationFriendly);
 		}
 	}

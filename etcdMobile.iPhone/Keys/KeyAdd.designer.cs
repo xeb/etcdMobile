@@ -74,6 +74,11 @@ namespace etcdMobile.iPhone
 				lblReadOnly = null;
 			}
 
+			if (lblRelative != null) {
+				lblRelative.Dispose ();
+				lblRelative = null;
+			}
+
 			if (txtKey != null) {
 				txtKey.Dispose ();
 				txtKey = null;
@@ -87,11 +92,6 @@ namespace etcdMobile.iPhone
 			if (txtValue != null) {
 				txtValue.Dispose ();
 				txtValue = null;
-			}
-
-			if (lblRelative != null) {
-				lblRelative.Dispose ();
-				lblRelative = null;
 			}
 		}
 	}
