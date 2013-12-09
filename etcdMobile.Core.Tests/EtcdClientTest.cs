@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Linq;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -43,6 +44,33 @@ namespace etcdMobile.Core.Tests
 			var targetKey = keys.FirstOrDefault (k => k.KeyName == rand1);
 
 			Assert.AreEqual (newElement.Value, targetKey.Value);
+		}
+
+		[Test]
+		public void CanFindKey()
+		{
+			var baseUrl = "http://127.0.0.1:4001";
+			var etcdClient = new EtcdClient(baseUrl);
+
+			TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+			int secondsSinceEpoch = (int)t.TotalSeconds;
+
+			var rand1 = (secondsSinceEpoch * -2).ToString();
+			var rand2 = (secondsSinceEpoch * -4).ToString();
+
+			Console.WriteLine ("Key is " + rand1);
+
+			var newElement = new EtcdElement { Key = "/some/deep/nested/path/to/find/a/key/" + rand1, Value = rand2, Ttl = 30 };
+			etcdClient.SaveKey (newElement);
+
+			var sw = Stopwatch.StartNew ();
+			var keys = etcdClient.FindKeys (rand1).ToList();
+			sw.Stop ();
+
+			Assert.AreEqual (1, keys.Count);
+			Assert.AreEqual (rand1, keys [0].KeyName);
+			Assert.AreEqual (rand2, keys [0].Value);
+			Console.WriteLine ("Find took {0}ms", sw.ElapsedMilliseconds);
 		}
 
 		[Test]

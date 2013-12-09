@@ -22,7 +22,7 @@ namespace etcdMobile.Core.Tests
 		[Test]
 		public void InLessThanAMinute()
 		{
-			for (int i = 10; i < 60; i++)
+			for (ulong i = 10; i < 60; i++)
 			{
 				var e = new EtcdElement ();
 				e.Ttl = i;
@@ -41,7 +41,7 @@ namespace etcdMobile.Core.Tests
 		[Test]
 		public void InNMinutes()
 		{
-			for(int i = 4; i < 57; i++)
+			for(ulong i = 4; i < 57; i++)
 			{
 				var e = new EtcdElement ();
 				e.Ttl = i * 60;
@@ -52,7 +52,7 @@ namespace etcdMobile.Core.Tests
 		[Test]
 		public void InAnHour()
 		{
-			for(int i = 57; i < 64; i++)
+			for(ulong i = 57; i < 64; i++)
 			{
 				var e = new EtcdElement ();
 				e.Ttl = i * 60;
@@ -63,7 +63,7 @@ namespace etcdMobile.Core.Tests
 		[Test]
 		public void InAFewHours()
 		{
-			for(int i = 64; i < (3 * 60); i = i + 60)
+			for(ulong i = 64; i < (3 * 60); i = i + 60)
 			{
 				var e = new EtcdElement ();
 				e.Ttl = i * 60;
@@ -74,7 +74,7 @@ namespace etcdMobile.Core.Tests
 		[Test]
 		public void InNHours()
 		{
-			for(int i = 4; i < 23; i++)
+			for(ulong i = 4; i < 23; i++)
 			{
 				var e = new EtcdElement ();
 				e.Ttl = i * 60 * 60;
@@ -85,7 +85,7 @@ namespace etcdMobile.Core.Tests
 		[Test]
 		public void InADay()
 		{
-			for(int i = 23; i < 25; i++)
+			for(ulong i = 23; i < 25; i++)
 			{
 				var e = new EtcdElement ();
 				e.Ttl = i * 60 * 60;
@@ -96,7 +96,7 @@ namespace etcdMobile.Core.Tests
 		[Test]
 		public void InAFewDays()
 		{
-			for(int i = 2; i < 4; i++)
+			for(ulong i = 2; i < 4; i++)
 			{
 				var e = new EtcdElement ();
 				e.Ttl = i * 60 * 60 * 24;
@@ -107,7 +107,7 @@ namespace etcdMobile.Core.Tests
 		[Test]
 		public void InNDays() 
 		{
-			for (int i = 4; i < 7; i++)
+			for (ulong i = 4; i < 7; i++)
 			{
 				var e = new EtcdElement ();
 				e.Ttl = i * 60 * 60 * 24;
@@ -118,7 +118,7 @@ namespace etcdMobile.Core.Tests
 		[Test]
 		public void InAWeek() 
 		{
-			for (int i = 160; i < (160 + 8); i++)
+			for (ulong i = 160; i < (160 + 8); i++)
 			{
 				var e = new EtcdElement ();
 				e.Ttl = i * 60 * 60;
@@ -129,7 +129,7 @@ namespace etcdMobile.Core.Tests
 		[Test]
 		public void InNWeeks() 
 		{
-			for (int i = 1; i < 3; i++)
+			for (ulong i = 1; i < 3; i++)
 			{
 				var e = new EtcdElement ();
 				e.Ttl = i * 60 * 60 * 24 * 7;
@@ -141,7 +141,7 @@ namespace etcdMobile.Core.Tests
 		[Test]
 		public void InAMonth() 
 		{
-			for (int i = 3; i < 5; i++)
+			for (ulong i = 3; i < 5; i++)
 			{
 				var e = new EtcdElement ();
 				e.Ttl = i * 60 * 60 * 24 * 7;

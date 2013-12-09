@@ -80,6 +80,22 @@ namespace etcdMobile.Core
 			ReadResponse(request);
 		}
 
+		public IEnumerable<EtcdElement> FindKeys(string keyName, EtcdElement parent = null)
+		{
+			keyName = keyName.ToUpperInvariant (); // not great to do this over & over
+			var subKeys = GetKeys (parent);
+			foreach (var subKey in subKeys)
+			{
+				if (subKey.Dir)
+					foreach (var child in FindKeys (keyName, subKey))
+						yield return child;
+
+				if (subKey.KeyName.ToUpper ().Contains (keyName))
+					yield return subKey;
+
+			}
+		}
+
 		private string GetKeyValue(EtcdElement key)
 		{
 			var keyValue = key.Key;
