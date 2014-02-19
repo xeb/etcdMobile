@@ -101,6 +101,7 @@ namespace etcdMobile.iPhone
 			
 			imgResponse.Hidden = true;
 			lblResponse.Hidden = true;
+			txtError.Hidden = true;
 			
 			activityView.Hidden = false;
 			activityView.StartAnimating();
@@ -125,6 +126,16 @@ namespace etcdMobile.iPhone
 						imgResponse.Image = UIImage.FromBundle("Images/xmark.png");
 						lblResponse.Text = "Invalid endpoint";
 						lblResponse.TextColor = UIColor.FromRGB(100, 0, 0);
+						txtError.Hidden = false;
+
+						try
+						{
+							sc.GetKeys();
+						}
+						catch(Exception ex)
+						{
+							txtError.Text = ex.Message;
+						}
 					});
 				}
 				

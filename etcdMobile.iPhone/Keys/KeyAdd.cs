@@ -56,7 +56,6 @@ namespace etcdMobile.iPhone
 		{
 			base.ViewDidLoad ();
 
-
 			NSNotificationCenter.DefaultCenter.AddObserver ("UITextFieldTextDidEndEditingNotification", EditingEnded);
 
 			_prefs = Globals.Preferences;
@@ -132,8 +131,10 @@ namespace etcdMobile.iPhone
 					if (!string.IsNullOrWhiteSpace (txtTTL.Text))
 					{
 						ulong ttl;
-						if(ulong.TryParse (txtTTL.Text, out ttl));
+						if(ulong.TryParse (txtTTL.Text, out ttl))
+						{
 							newKey.Ttl = ttl;
+						}
 					}
 
 					UIHelper.Try(() => _server.Client.SaveKey (newKey));
@@ -156,6 +157,8 @@ namespace etcdMobile.iPhone
 					btnDelete.Clicked += (sender, e) =>
 					{
 						UIHelper.Try (() => _server.Client.DeleteKey (_key));
+						// BUG: delete from parent
+
 						NavigationController.PopViewControllerAnimated (true);
 					};
 				}	
@@ -190,9 +193,29 @@ namespace etcdMobile.iPhone
 		{
 			if (!string.IsNullOrWhiteSpace(txtTTL.Text))
 			{
+				var alert = new UIAlertView ("Invalid TTL", "", null, "OK");
 				ulong ttl;
-				if(ulong.TryParse(txtTTL.Text, out ttl))
-					SetDates (ttl);
+				if (ulong.TryParse (txtTTL.Text, out ttl))
+				{
+					var secondsUntilDoom = (DateTime.MaxValue - DateTime.UtcNow).TotalSeconds;
+					if (ttl >= secondsUntilDoom)
+					{
+						alert.Message = "WAY too big.  You know you don't *have* to set a time-to-live, right?";
+						alert.Show ();
+						ResetTTL ();
+					}
+					else
+					{
+						SetDates (ttl);
+					}
+				}
+				else
+				{
+					alert.Message = "TTL value cannot be parsed";
+					alert.Show ();
+
+					ResetTTL ();
+				}
 			}
 		}
 
@@ -205,6 +228,14 @@ namespace etcdMobile.iPhone
 				lblRelative.Text = EtcdElement.GetFriendlyTtl(ttl);
 				lblRelative.Hidden = false;
 			}
+		}
+
+		private void ResetTTL()
+		{
+			txtTTL.Text = "";
+			lblDateUtc.Hidden = true;
+			lblDateLocal.Hidden = true;
+			lblRelative.Hidden = true;
 		}
 
 		private void SetDatesFromUtcDate(DateTime utc)

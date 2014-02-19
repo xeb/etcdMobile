@@ -28,7 +28,7 @@ namespace etcdMobile.Core
 			
 			return baseUrl;
 		}
-		
+
 		public bool IsValidEndpoint()
 		{
 			try

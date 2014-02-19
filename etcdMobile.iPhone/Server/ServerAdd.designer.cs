@@ -31,6 +31,9 @@ namespace etcdMobile.iPhone
 		MonoTouch.UIKit.UITextField txtAddress { get; set; }
 
 		[Outlet]
+		MonoTouch.UIKit.UITextView txtError { get; set; }
+
+		[Outlet]
 		MonoTouch.UIKit.UITextField txtName { get; set; }
 
 		[Action ("txtAddressEditingDidEnd:")]
@@ -38,6 +41,11 @@ namespace etcdMobile.iPhone
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (txtError != null) {
+				txtError.Dispose ();
+				txtError = null;
+			}
+
 			if (activityView != null) {
 				activityView.Dispose ();
 				activityView = null;
@@ -46,6 +54,11 @@ namespace etcdMobile.iPhone
 			if (btnSave != null) {
 				btnSave.Dispose ();
 				btnSave = null;
+			}
+
+			if (btnVerify != null) {
+				btnVerify.Dispose ();
+				btnVerify = null;
 			}
 
 			if (imgResponse != null) {
@@ -66,11 +79,6 @@ namespace etcdMobile.iPhone
 			if (txtName != null) {
 				txtName.Dispose ();
 				txtName = null;
-			}
-
-			if (btnVerify != null) {
-				btnVerify.Dispose ();
-				btnVerify = null;
 			}
 		}
 	}
