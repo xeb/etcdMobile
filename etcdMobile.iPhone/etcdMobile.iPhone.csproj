@@ -157,6 +157,7 @@
     <Compile Include="Keys\KeySearch.designer.cs">
       <DependentUpon>KeySearch.cs</DependentUpon>
     </Compile>
+    <Compile Include="Common\StringValues.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

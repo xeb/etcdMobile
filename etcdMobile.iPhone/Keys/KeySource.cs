@@ -89,14 +89,20 @@ namespace etcdMobile.iPhone.Keys
 			{
 				var key = _keys[indexPath.Row];
 
-				UIHelper.Try(() => _server.Client.DeleteKey (key));
-				
-				Refresh(); 
+				var confirm = new UIAlertView ("Delete", StringValues.DeleteKeyMessage, null, "Delete", "Cancel");
+				confirm.Show ();
+				confirm.Clicked += (sender, e) => {
+					if(e.ButtonIndex == 0) {
+						UIHelper.Try(() => _server.Client.DeleteKey (key));
 
-				if (ItemDeleted != null)
-				{
-					ItemDeleted (this, null);
-				}
+						Refresh(); 
+
+						if (ItemDeleted != null)
+						{
+							ItemDeleted (this, null);
+						}
+					}
+				};
 			}
 		}
 

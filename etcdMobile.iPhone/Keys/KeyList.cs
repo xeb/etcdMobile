@@ -108,7 +108,7 @@ namespace etcdMobile.iPhone
 
 		private void SetStats()
 		{
-			lblIndex.Text = _source.Keys.First ().Index.ToString();
+			lblIndex.Text = (_source.Keys.FirstOrDefault() ?? new EtcdElement()).Index.ToString();
 			lblKeys.Text = _source.Keys.Count.ToString();
 			lblDirs.Text = _source.Keys.Count (k => k.Dir).ToString();
 		}

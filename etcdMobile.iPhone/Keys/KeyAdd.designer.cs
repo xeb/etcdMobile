@@ -13,10 +13,19 @@ namespace etcdMobile.iPhone
 	partial class KeyAdd
 	{
 		[Outlet]
+		MonoTouch.UIKit.UIBarButtonItem btnCancel { get; set; }
+
+		[Outlet]
 		MonoTouch.UIKit.UIBarButtonItem btnDelete { get; set; }
 
 		[Outlet]
+		MonoTouch.UIKit.UIButton btnFalse { get; set; }
+
+		[Outlet]
 		MonoTouch.UIKit.UIBarButtonItem btnSave { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UIButton btnTrue { get; set; }
 
 		[Outlet]
 		MonoTouch.UIKit.UILabel lblDateLocal { get; set; }
@@ -44,6 +53,21 @@ namespace etcdMobile.iPhone
 		
 		void ReleaseDesignerOutlets ()
 		{
+			if (btnFalse != null) {
+				btnFalse.Dispose ();
+				btnFalse = null;
+			}
+
+			if (btnTrue != null) {
+				btnTrue.Dispose ();
+				btnTrue = null;
+			}
+
+			if (btnCancel != null) {
+				btnCancel.Dispose ();
+				btnCancel = null;
+			}
+
 			if (btnDelete != null) {
 				btnDelete.Dispose ();
 				btnDelete = null;

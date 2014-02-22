@@ -157,20 +157,34 @@ namespace etcdMobile.iPhone
 				{
 					btnDelete.Clicked += (sender, e) =>
 					{
-						UIHelper.Try (() => _server.Client.DeleteKey (_key));
+						var confirm = new UIAlertView ("Delete", StringValues.DeleteKeyMessage, null, "Delete", "Cancel");
+						confirm.Show ();
+						confirm.Clicked += (sender2, e2) => {
+							if(e2.ButtonIndex == 0) {
 
-						if(OnDelete != null)
-						{
-							OnDelete(this, null);
-						}
+								UIHelper.Try (() => _server.Client.DeleteKey (_key));
 
-						NavigationController.PopViewControllerAnimated (true);
+								if(OnDelete != null)
+								{
+									OnDelete(this, null);
+								}
+
+								NavigationController.PopViewControllerAnimated (true);
+							}
+						};
+
 					};
-				}	
+
+					btnCancel.Clicked += (sender, e) => 
+					{
+						ViewDidLoad();
+					};
+				}
 			}
 			else
 			{
 				btnSave.Enabled = false;
+				btnCancel.Enabled = false;
 				btnDelete.Enabled = false;
 			}
 		}
