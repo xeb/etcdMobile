@@ -33,6 +33,7 @@ namespace etcdMobile.iPhone
 		}
 
 		public event EventHandler OnSave;
+		public event EventHandler OnDelete;
 
 		public override void ViewWillAppear (bool animated)
 		{
@@ -157,7 +158,11 @@ namespace etcdMobile.iPhone
 					btnDelete.Clicked += (sender, e) =>
 					{
 						UIHelper.Try (() => _server.Client.DeleteKey (_key));
-						// BUG: delete from parent
+
+						if(OnDelete != null)
+						{
+							OnDelete(this, null);
+						}
 
 						NavigationController.PopViewControllerAnimated (true);
 					};
@@ -169,25 +174,6 @@ namespace etcdMobile.iPhone
 				btnDelete.Enabled = false;
 			}
 		}
-
-		/*
-		 * 
-		public void SetTtl(string ttlValue)
-		{
-			if (!string.IsNullOrWhiteSpace (ttlValue))
-			{
-				int ttl;
-				if (int.TryParse (ttlValue, out ttl))
-					SetTtl (ttl);
-			}
-		}
-
-		public void SetTtl(int ttl)
-		{
-			Ttl = ttl;
-			_expirationDate = DateTime.Now.AddSeconds (ttl);
-		}
-		*/
 
 		private void EditingEnded(NSNotification notification)
 		{

@@ -145,6 +145,8 @@ namespace etcdMobile.iPhone.Keys
 			{
 				var keyAdd = new KeyAdd (_server, cell);
 				keyAdd.OnSave += Refresh;
+				keyAdd.OnDelete += Refresh;
+
 				_nav.PushViewController (keyAdd, true);
 			}
 		}
