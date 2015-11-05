@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using etcdMobile.Core;
+using etcetera;
 using etcdMobile.iPhone.Common;
 using etcdMobile.iPhone.Keys;
 
@@ -13,10 +13,10 @@ namespace etcdMobile.iPhone
 	{
 		private Server _server;
 		private Preferences _prefs;
-		private EtcdElement _key;
+		private Node _key;
 		private string _parentKey;
 
-		public KeyAdd(Server server, string parentKey) : this(server, (EtcdElement)null)
+		public KeyAdd(Server server, string parentKey) : this(server, (Node)null)
 		{
 			_parentKey = parentKey;
 
@@ -26,7 +26,7 @@ namespace etcdMobile.iPhone
 			}
 		}
 
-		public KeyAdd (Server server, EtcdElement key) : base ("KeyAdd", null)
+		public KeyAdd (Server server, Node key) : base ("KeyAdd", null)
 		{
 			_server = server;
 			_key = key;
@@ -96,7 +96,7 @@ namespace etcdMobile.iPhone
 
 			if (_key != null)
 			{
-				Title = _key.KeyName;
+				Title = _key.KeyName();
 				txtKey.Text = _key.Key;
 				txtValue.Text = _key.Value;
 
@@ -107,7 +107,7 @@ namespace etcdMobile.iPhone
 					SetDates (_key.Ttl);
 				}
 
-				lblIndex.Text = _key.Index.ToString();
+				lblIndex.Text = _key.CreatedIndex.ToString ();
 			}
 			else
 			{
@@ -120,7 +120,7 @@ namespace etcdMobile.iPhone
 			{
 				btnSave.Clicked += (sender, e) =>
 				{
-					var newKey = new EtcdElement ();
+					var newKey = new Node ();
 					newKey.Key = txtKey.Text;
 					if (!newKey.Key.StartsWith ("/"))
 					{
@@ -131,18 +131,18 @@ namespace etcdMobile.iPhone
 
 					if (!string.IsNullOrWhiteSpace (txtTTL.Text))
 					{
-						ulong ttl;
-						if(ulong.TryParse (txtTTL.Text, out ttl))
+						int ttl;
+						if(int.TryParse (txtTTL.Text, out ttl))
 						{
 							newKey.Ttl = ttl;
 						}
 					}
 
-					UIHelper.Try(() => _server.Client.SaveKey (newKey));
+					UIHelper.Try(() => _server.Client.Set(newKey.Key, newKey.Value, (newKey.Ttl ?? 0)));
 
 					if (_key != null && _key.Key != txtKey.Text)
 					{
-						UIHelper.Try(() => _server.Client.DeleteKey (_key));
+						UIHelper.Try(() => _server.Client.Delete(_key.Key));
 					}
 
 					if (OnSave != null)
@@ -162,7 +162,7 @@ namespace etcdMobile.iPhone
 						confirm.Clicked += (sender2, e2) => {
 							if(e2.ButtonIndex == 0) {
 
-								UIHelper.Try (() => _server.Client.DeleteKey (_key));
+								UIHelper.Try (() => _server.Client.Delete(_key.Key));
 
 								if(OnDelete != null)
 								{
@@ -194,8 +194,8 @@ namespace etcdMobile.iPhone
 			if (!string.IsNullOrWhiteSpace(txtTTL.Text))
 			{
 				var alert = new UIAlertView ("Invalid TTL", "", null, "OK");
-				ulong ttl;
-				if (ulong.TryParse (txtTTL.Text, out ttl))
+				int ttl;
+				if (int.TryParse (txtTTL.Text, out ttl))
 				{
 					var secondsUntilDoom = (DateTime.MaxValue - DateTime.UtcNow).TotalSeconds;
 					if (ttl >= secondsUntilDoom)
@@ -219,13 +219,13 @@ namespace etcdMobile.iPhone
 			}
 		}
 
-		private void SetDates(ulong? ttl)
+		private void SetDates(int? ttl)
 		{
 			if(ttl.HasValue && ttl.Value > 0)
 			{
 				var expiration = DateTime.UtcNow.AddSeconds (ttl.Value);
 				SetDatesFromUtcDate (expiration);
-				lblRelative.Text = EtcdElement.GetFriendlyTtl(ttl);
+				lblRelative.Text = NodeExtensions.GetFriendlyTtl(ttl);
 				lblRelative.Hidden = false;
 			}
 		}

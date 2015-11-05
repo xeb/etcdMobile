@@ -27,10 +27,10 @@ namespace etcdMobile.iPhone.Common
 
 		public void SetToDefault()
 		{
-			ReadOnly = true;
+			ReadOnly = false;
 			RefreshOnSave = false;
 			UseSmartValues = false;
-			HideEtcdDir = true;
+			HideEtcdDir = false;
 
 			SaveToCache ();
 		}

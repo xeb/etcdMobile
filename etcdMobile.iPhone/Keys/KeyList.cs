@@ -4,15 +4,15 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using System.Linq;
 using etcdMobile.iPhone.Common;
-using etcdMobile.Core;
 using etcdMobile.iPhone.Keys;
+using etcetera;
 
 namespace etcdMobile.iPhone
 {
 	public partial class KeyList : UIViewController
 	{
 		private Server _server;
-		private EtcdElement _parentKey;
+		private Node _parentKey;
 		private KeySource _source;
 		private SortType _sort;
 		private Preferences _prefs;
@@ -22,7 +22,7 @@ namespace etcdMobile.iPhone
 			_server = server;
 		}
 
-		public KeyList(Server server, EtcdElement parent) : this(server)
+		public KeyList(Server server, Node parent) : this(server)
 		{
 			_parentKey = parent;
 		}
@@ -67,7 +67,7 @@ namespace etcdMobile.iPhone
 		{
 			base.ViewDidLoad ();
 
-			Title = _parentKey == null ? _server.Name : _parentKey.KeyName;
+			Title = _parentKey == null ? _server.Name : _parentKey.KeyName();
 
 			_prefs = Globals.Preferences;
 
@@ -108,7 +108,7 @@ namespace etcdMobile.iPhone
 
 		private void SetStats()
 		{
-			lblIndex.Text = (_source.Keys.FirstOrDefault() ?? new EtcdElement()).Index.ToString();
+			lblIndex.Text = (_source.Keys.FirstOrDefault() ?? new Node()).CreatedIndex.ToString();
 			lblKeys.Text = _source.Keys.Count.ToString();
 			lblDirs.Text = _source.Keys.Count (k => k.Dir).ToString();
 		}

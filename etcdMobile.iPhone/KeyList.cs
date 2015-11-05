@@ -4,8 +4,8 @@ using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using etcdMobile.iPhone.Common;
-using etcdMobile.Core;
 using System.Drawing;
+using etcetera;
 
 namespace Switchboard.iPhone
 {
@@ -13,10 +13,10 @@ namespace Switchboard.iPhone
 	{
 		private UILabel _title;
 		private UIBarButtonItem _add;
-		private EtcdElement _previousCell;
-		private List<EtcdElement> _cells;
+		private Node _previousCell;
+		private List<Node> _cells;
 		
-		public KeyList(List<EtcdElement> cells, EtcdElement previousCell)
+		public KeyList(List<Node> cells, Node previousCell)
 		{
 			_cells = cells;
 			_previousCell = previousCell;
@@ -65,11 +65,11 @@ namespace Switchboard.iPhone
 			
 			if(_cells == null)
 			{
-				_cells = new List<EtcdElement>();
-				_cells.Add(new EtcdElement { Key = "Test 1" });
-				_cells.Add(new EtcdElement { Key = "Test 2" });
-				_cells.Add(new EtcdElement { Key = "Test 3" });
-				_cells.Add(new EtcdElement { Key = "Test 4" });
+				_cells = new List<Node>();
+				_cells.Add(new Node { Key = "Test 1" });
+				_cells.Add(new Node { Key = "Test 2" });
+				_cells.Add(new Node { Key = "Test 3" });
+				_cells.Add(new Node { Key = "Test 4" });
 			}
 			
 			var keySource = new KeySource(_cells, NavigationController);
@@ -88,12 +88,12 @@ namespace Switchboard.iPhone
 		public class KeySource : EtcdElementSource
 		{
 			private UINavigationController _nav;
-			public KeySource(List<EtcdElement> cells, UINavigationController nav) : base(cells, nav)
+			public KeySource(List<Node> cells, UINavigationController nav) : base(cells, nav)
 			{
 				_nav = nav;
 			}
 			
-			public override void ModifyNewCell (UITableViewCell tableCell, EtcdElement cell)
+			public override void ModifyNewCell (UITableViewCell tableCell, Node cell)
 			{
 				tableCell.BackgroundColor = UIColor.FromRGBA(0,0,0,0);
 				tableCell.TextLabel.TextColor = UIColor.FromRGB(190,190,190);
@@ -110,16 +110,16 @@ namespace Switchboard.iPhone
 				}
 			}
 			
-			public override void CellSelected (EtcdElement cell)
+			public override void CellSelected (Node cell)
 			{
 				base.CellSelected (cell);
 				
-				var newCells = new List<EtcdElement>();
-				newCells.Add(new EtcdElement { Key = "Test A" });
-				newCells.Add(new EtcdElement { Key = "Test B", Value = "true" });
-				newCells.Add(new EtcdElement { Key = "Test C" });
-				newCells.Add(new EtcdElement { Key = "Test D", Value = "false" });
-				newCells.Add(new EtcdElement { Key = "Very Long Name" });
+				var newCells = new List<Node>();
+				newCells.Add(new Node { Key = "Test A" });
+				newCells.Add(new Node { Key = "Test B", Value = "true" });
+				newCells.Add(new Node { Key = "Test C" });
+				newCells.Add(new Node { Key = "Test D", Value = "false" });
+				newCells.Add(new Node { Key = "Very Long Name" });
 				
 				var keylist = new KeyList(newCells, cell);
 				_nav.PushViewController(keylist, true);

@@ -2,16 +2,16 @@ using System;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using System.Collections.Generic;
-using etcdMobile.Core;
+using etcetera;
 
 namespace etcdMobile.iPhone.Common
 {
 	public class EtcdElementSource : UITableViewSource
 	{
 		protected UINavigationController NavigationController;
-		protected List<EtcdElement> Cells;
+		protected List<Node> Cells;
 		
-		public EtcdElementSource(List<EtcdElement> cells, UINavigationController nav)
+		public EtcdElementSource(List<Node> cells, UINavigationController nav)
 		{
 			NavigationController = nav;
 			Cells = cells;
@@ -28,9 +28,9 @@ namespace etcdMobile.iPhone.Common
     		CellSelected(cell);
         }
         
-        public virtual void CellSelected(EtcdElement cell)
+		public virtual void CellSelected(Node cell)
         {
-        	Console.WriteLine("Selected Cell '{0}'", cell.Key);
+			Console.WriteLine("Selected Cell '{0}'", cell.KeyName());
         }
         
         public virtual System.Drawing.SizeF GetImageSize()
@@ -43,17 +43,17 @@ namespace etcdMobile.iPhone.Common
         	return 1;
         }
         
-        public virtual void ModifyNewCell(UITableViewCell tableCell, EtcdElement simpleCell)
+		public virtual void ModifyNewCell(UITableViewCell tableCell, Node simpleCell)
         {
         }
         
-        public virtual void ModifyReusedCell(UITableViewCell tableCell, EtcdElement simpleCell)
+		public virtual void ModifyReusedCell(UITableViewCell tableCell, Node simpleCell)
         {
         }
        
         public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
         {
-            EtcdElement cell = Cells[indexPath.Row];
+			Node cell = Cells[indexPath.Row];
             
 			var tblCell = tableView.DequeueReusableCell("TblCell");
 			if (tblCell == null)
@@ -62,7 +62,7 @@ namespace etcdMobile.iPhone.Common
         		ModifyNewCell(tblCell, cell);
         	}
             
-            tblCell.TextLabel.Text = cell.KeyName;
+            tblCell.TextLabel.Text = cell.Key;
             ModifyReusedCell(tblCell, cell);
             
             return tblCell;

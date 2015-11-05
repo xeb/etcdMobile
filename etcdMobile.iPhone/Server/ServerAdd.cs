@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using etcdMobile.Core;
+using etcetera;
 using etcdMobile.iPhone.Common;
 
 namespace etcdMobile.iPhone
@@ -109,9 +109,19 @@ namespace etcdMobile.iPhone
 			var address = txtAddress.Text;
 			InvokeInBackground(() =>
 			{
-				
-				var sc = new EtcdClient(address);
-				var isValid = sc.IsValidEndpoint();
+				bool isValid = false;
+
+				Exception ex;
+				try
+				{
+					var sc = new EtcdClient(new Uri(address));
+					isValid = sc.IsValidEndpoint(out ex);
+				}
+				catch(Exception ex2)
+				{
+					ex = ex2;
+				}
+
 				if(isValid)
 				{
 					InvokeOnMainThread(() => {
@@ -127,15 +137,7 @@ namespace etcdMobile.iPhone
 						lblResponse.Text = "Invalid endpoint";
 						lblResponse.TextColor = UIColor.FromRGB(100, 0, 0);
 						txtError.Hidden = false;
-
-						try
-						{
-							sc.GetKeys();
-						}
-						catch(Exception ex)
-						{
-							txtError.Text = ex.Message;
-						}
+						txtError.Text = ex.Message;
 					});
 				}
 				

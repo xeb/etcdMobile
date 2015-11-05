@@ -3,7 +3,7 @@ using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using etcdMobile.iPhone.Keys;
-using etcdMobile.Core;
+using etcetera;
 
 namespace etcdMobile.iPhone
 {
@@ -13,7 +13,7 @@ namespace etcdMobile.iPhone
 		public static readonly NSString Key = new NSString ("KeyListCell");
 
 		public UINavigationController _nav;
-		public EtcdElement _key;
+		public Node _key;
 
 		public string KeyName 
 		{
@@ -31,13 +31,13 @@ namespace etcdMobile.iPhone
 
 		}
 
-		public static KeyListCell Create (UINavigationController nav, EtcdElement key)
+		public static KeyListCell Create (UINavigationController nav, Node key)
 		{
 			var item = (KeyListCell)Nib.Instantiate (null, null) [0];
 			
 			item._nav = nav;
 			item._key = key;
-			item.KeyName = key.KeyName;
+			item.KeyName = key.KeyName();
 
 			if (key.Dir)
 			{

@@ -1,5 +1,5 @@
 using System;
-using etcdMobile.Core;
+using etcetera;
 
 namespace etcdMobile.iPhone.Common
 {
@@ -17,7 +17,7 @@ namespace etcdMobile.iPhone.Common
 			{
 				if (_client == null && !string.IsNullOrWhiteSpace(BaseUrl))
 				{
-					_client = new EtcdClient (BaseUrl);
+					_client = new EtcdClient (new Uri(BaseUrl));
 				}
 
 				return _client;

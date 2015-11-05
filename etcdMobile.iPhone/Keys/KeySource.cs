@@ -4,22 +4,22 @@ using System.Drawing;
 using MonoTouch.UIKit;
 using System.Linq;
 using etcdMobile.iPhone.Common;
-using etcdMobile.Core;
 using System.Collections.Generic;
+using etcetera;
 
 namespace etcdMobile.iPhone.Keys
 {
 	public class KeySource : UITableViewSource
 	{
-		private EtcdElement _parent;
+		private Node _parent;
 		private Preferences _prefs;
 		private Server _server;
 		private IReloadableTableView _tbl;
-		private List<EtcdElement> _keys;
+		private List<Node> _keys;
 		private UINavigationController _nav;
 		public EventHandler ItemDeleted;
 
-		public KeySource(UINavigationController nav, Server server, EtcdElement parent, IReloadableTableView tbl)
+		public KeySource(UINavigationController nav, Server server, Node parent, IReloadableTableView tbl)
 		{
 			_tbl = tbl;
 			_nav = nav;
@@ -42,18 +42,38 @@ namespace etcdMobile.iPhone.Keys
 		{
 			if (_parent != null)
 			{
-				_keys = _server.Client.GetChildKeys (_parent);
+				_keys = _server.Client.Get (_parent.Key).Node.Nodes;
 			}
 			else
 			{
-				_keys = _server.Client.GetKeys ();
+				// MARK: CRASH HERE!  OVERLOAD ALL GET METHODS
+				// TODO: COULD NOT CONNECT
+				try
+				{
+					var keys = _server.Client.Get(string.Empty);
+					if(keys != null && keys.Node != null && keys.Node.Nodes != null)
+					{
+						_keys = keys.Node.Nodes;
+					}
+				}
+				catch(Exception ex)
+				{
+					Console.WriteLine ("Exception getting keys {0}", ex.Message);
+				}
 			}
 
+
+			if (_keys == null || !_keys.Any ())
+			{
+				_keys = new List<Node> ();
+			}
+				
 			if (_prefs.HideEtcdDir)
 			{
-				_keys.RemoveAll(k => k.Dir && k.KeyName == "_etcd");
+				_keys.RemoveAll(k => k.Dir && k.KeyName() == "_etcd");
 			}
 
+			// MARK: TODO: NULL?
 			switch (sortType)
 			{
 				case SortType.NameAsc:
@@ -93,7 +113,7 @@ namespace etcdMobile.iPhone.Keys
 				confirm.Show ();
 				confirm.Clicked += (sender, e) => {
 					if(e.ButtonIndex == 0) {
-						UIHelper.Try(() => _server.Client.DeleteKey (key));
+						UIHelper.Try(() => _server.Client.Delete (key.Key));
 
 						Refresh(); 
 
@@ -124,7 +144,7 @@ namespace etcdMobile.iPhone.Keys
 			}
 		}
 
-		public List<EtcdElement> Keys 
+		public List<Node> Keys 
 		{
 			get { return _keys; }
 		}
@@ -141,7 +161,7 @@ namespace etcdMobile.iPhone.Keys
 
 		public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
 		{   	
-			var cell = _keys[indexPath.Row] as EtcdElement;
+			var cell = _keys[indexPath.Row] as Node;
 			if (cell.Dir)
 			{
 				var keyList = new KeyList (_server, cell);
@@ -166,7 +186,7 @@ namespace etcdMobile.iPhone.Keys
 
 		public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
 		{
-			EtcdElement cell = _keys[indexPath.Row];
+			Node cell = _keys[indexPath.Row];
 			
 			var tblCell = tableView.DequeueReusableCell(_cellName) as KeyListCell;
 			if (tblCell == null)

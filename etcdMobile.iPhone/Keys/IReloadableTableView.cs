@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using etcdMobile.Core;
 using etcdMobile.iPhone.Common;
 
 
